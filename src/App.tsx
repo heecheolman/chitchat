@@ -6,7 +6,6 @@ import client from './apolloClient';
 
 import MainFrame from './containers/MainFrame';
 import { Store } from './store';
-import { Redirect } from 'react-router';
 
 Store.initState({
   userName: '',
@@ -20,9 +19,13 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
-        <MainFrame />
-      </div>
+      <ApolloProvider client={client}>
+        <ApolloHooksProvider client={client}>
+          <div className="App">
+            <MainFrame />
+          </div>
+        </ApolloHooksProvider>
+      </ApolloProvider>
     );
   }
 }
