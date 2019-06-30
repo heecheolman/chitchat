@@ -6,7 +6,7 @@ import { useMutation } from 'react-apollo-hooks';
 
 
 /** createUser Mutation */
-const createUser = gql`  
+const CREATE_USER = gql`  
   mutation createUser($userName: String!) {
     createUser(userName: $userName) {
       id
@@ -17,9 +17,16 @@ const createUser = gql`
 
 const EntryTemplate: React.FC = () => {
   const [userName, setUserName] = useState('');
-  const mutaion = useMutation(createUser, {
+  const mutation = useMutation(CREATE_USER, {
     variables: {
       userName
+    },
+    update: (proxy, { data }) => {
+      console.log('proxy', proxy);
+      console.log('data', data);
+      const { id } = data.createUser;
+      Store.setState({ id });
+      console.log('Store Data', Store.instance);
     }
   });
 
@@ -33,7 +40,7 @@ const EntryTemplate: React.FC = () => {
         <button disabled={userName.length < 3}
                 onClick={() => {
                   Store.setState({ userName });
-                  mutaion();
+                  mutation();
                 }}
         >채팅하러가기!</button>
       </Link>

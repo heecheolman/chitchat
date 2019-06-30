@@ -9,6 +9,7 @@ import { Store } from './store';
 
 Store.initState({
   userName: '',
+  id: null,
 });
 
 class App extends React.Component {
