@@ -22,8 +22,6 @@ const EntryTemplate: React.FC = () => {
       userName
     },
     update: (proxy, { data }) => {
-      console.log('proxy', proxy);
-      console.log('data', data);
       const { id } = data.createUser;
       Store.setState({ id });
       console.log('Store Data', Store.instance);
@@ -36,7 +34,7 @@ const EntryTemplate: React.FC = () => {
       <input type="text"
              onChange={(e) => setUserName(e.target.value)}
       />
-      <Link to="chat-list">
+      <Link to="chatrooms">
         <button disabled={userName.length < 3}
                 onClick={() => {
                   Store.setState({ userName });

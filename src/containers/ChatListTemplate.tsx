@@ -1,12 +1,14 @@
 import React from 'react';
+import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
+import { Link } from 'react-router-dom';
 
 import { Store } from '../store';
 import ChatHeader from '../components/ChatHeader';
 import NewChat from '../components/NewChat';
-import { Query } from 'react-apollo';
+import styles from './ChatListTemplate.module.scss';
 
-const GET_CHAT_ROOMS = gql`
+const CHAT_ROOMS_QUERY = gql`
   query {
     chatRooms {
       id
@@ -15,7 +17,7 @@ const GET_CHAT_ROOMS = gql`
   }
 `;
 
-const CHAT_ROOM_CREATED = gql`
+const CHAT_ROOM_SUBSCRIPTION = gql`
   subscription {
     chatRoomCreated {
       id
@@ -33,7 +35,7 @@ let unsubscribe: any = null;
 const ChatListTemplate: React.FC = () => {
   return (
     <>
-      <Query query={GET_CHAT_ROOMS}>
+      <Query query={CHAT_ROOMS_QUERY}>
         {({ loading, data, subscribeToMore }: any) => {
 
           if (loading) {
@@ -42,14 +44,12 @@ const ChatListTemplate: React.FC = () => {
 
           if (!unsubscribe) {
             unsubscribe = subscribeToMore({
-              document: CHAT_ROOM_CREATED,
+              document: CHAT_ROOM_SUBSCRIPTION,
               updateQuery: (prev: any, { subscriptionData }: any) => {
                 if (!subscriptionData.data) {
                   return prev;
                 }
                 const { chatRoomCreated } = subscriptionData.data;
-                console.log('prev', prev);
-                console.log('chatRoomCreated', chatRoomCreated);
                 return {
                   ...prev,
                   chatRooms: [
@@ -64,13 +64,17 @@ const ChatListTemplate: React.FC = () => {
           return (
             <>
               <ChatHeader userName={Store.instance.userName} />
-              {
-                data.chatRooms.map((chatRoom: any, index: number) => {
-                  return (
-                    <li key={index}>{chatRoom.id}: {chatRoom.title}</li>
-                  )
-                })
-              }
+              <ul className={styles['chat-rooms']}>
+                {
+                  data.chatRooms.map((chatRoom: any, index: number) => {
+                    return (
+                      <Link to={`/chatrooms/${chatRoom.id}`} key={index}>
+                        <li className={styles['chat-rooms__room']}>{chatRoom.id}: {chatRoom.title}</li>
+                      </Link>
+                    )
+                  })
+                }
+              </ul>
               <NewChat />
             </>
           )
