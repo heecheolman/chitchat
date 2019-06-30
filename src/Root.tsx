@@ -4,10 +4,7 @@ import App from './App';
 
 const Root = () => (
   <BrowserRouter>
-    <Route exact path="/">
-      <Redirect to="/app" />
-      <Route path="/app" component={App} />
-    </Route>
+    <App />
   </BrowserRouter>
 );
 
