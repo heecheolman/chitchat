@@ -1,10 +1,17 @@
 import React from 'react';
 import styles from './ChatHeader.module.scss';
+import { Route } from 'react-router';
 
-const ChatHeader: React.FC<{ userName: string }> = ({ userName }: any) => (
+const ChatHeader: React.FC<{ userName: string }> = ({ userName }: { userName: string }) => (
   <>
     <div className={styles['chat-header']}>
-      {userName}
+      <Route render={({ history }) => (
+        <>
+          <button onClick={() => {history.goBack()}}>이전으로</button>
+          {userName}
+        </>
+      )}>
+      </Route>
     </div>
   </>
 );

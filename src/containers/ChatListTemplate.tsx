@@ -3,8 +3,6 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 
-import { Store } from '../store';
-import ChatHeader from '../components/ChatHeader';
 import NewChat from '../components/NewChat';
 import styles from './ChatListTemplate.module.scss';
 
@@ -42,6 +40,8 @@ const ChatListTemplate: React.FC = () => {
             return null;
           }
 
+          console.log('unsubscribe', unsubscribe);
+
           if (!unsubscribe) {
             unsubscribe = subscribeToMore({
               document: CHAT_ROOM_SUBSCRIPTION,
@@ -50,6 +50,7 @@ const ChatListTemplate: React.FC = () => {
                   return prev;
                 }
                 const { chatRoomCreated } = subscriptionData.data;
+                console.log('prev', prev);
                 return {
                   ...prev,
                   chatRooms: [
@@ -63,7 +64,6 @@ const ChatListTemplate: React.FC = () => {
 
           return (
             <>
-              <ChatHeader userName={Store.instance.userName} />
               <ul className={styles['chat-rooms']}>
                 {
                   data.chatRooms.map((chatRoom: any, index: number) => {
