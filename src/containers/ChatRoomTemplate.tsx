@@ -4,6 +4,8 @@ import { useMutation } from 'react-apollo-hooks';
 import { Store } from '../store';
 import { Query } from 'react-apollo';
 import Input from '../components/Input';
+import { IMessage } from '../interfaces';
+import Message from '../components/Message';
 
 const MESSAGE_MUTATION = gql`
   mutation createMessage($chatRoomId: Int!, $userId: Int!, $content: String!) {
@@ -118,6 +120,14 @@ const ChatRoomTemplate: React.FC<{ match: any }> = ({ match }) => {
               <>
                 <h3>ChatRoomTemplate :{ chatRoomId }</h3>
                 <h4>메세지들</h4>
+                <div>
+                  {
+                    data.messages.map(
+                      (message: IMessage) =>
+                        <Message key={message.id} message={message} />
+                      )
+                  }
+                </div>
                 <Input value={content}
                        onChange={onChange}
                        onClick={onClick}
