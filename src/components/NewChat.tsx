@@ -26,6 +26,7 @@ const CREATE_CHAT_ROOM = gql`
 `;
 
 const NewChat: React.FC = () => {
+  console.log('NewChat Rendered!');
   const userId = +Store.instance.id;
   const mutation = useMutation(CREATE_CHAT_ROOM, {
     variables: {

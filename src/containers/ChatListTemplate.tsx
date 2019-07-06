@@ -31,6 +31,7 @@ const CHAT_ROOM_SUBSCRIPTION = gql`
 let unsubscribe: any = null;
 
 const ChatListTemplate: React.FC = () => {
+  console.log('ChatListTemplate Rendered!');
   return (
     <>
       <Query query={CHAT_ROOMS_QUERY}>
