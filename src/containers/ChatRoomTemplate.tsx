@@ -80,6 +80,12 @@ const ChatRoomTemplate: React.FC<{ match: any }> = ({ match }) => {
     }
   };
 
+  /**
+   * 1. 채팅방에 들어오면 subscription 시작
+   * 2. 나가면 subscription 종료
+   * 3.
+   */
+
   return (
     <>
       <Query query={MESSAGE_QUERY} variables={{ chatRoomId: +chatRoomId }}>
@@ -89,7 +95,8 @@ const ChatRoomTemplate: React.FC<{ match: any }> = ({ match }) => {
             if (loading) {
               return null;
             }
-
+            // TODO subscribe 변경
+            // 현재 특정 채팅방만 subscribe 하고있음
             if (!unsubscribe) {
               unsubscribe = subscribeToMore({
                 document: MESSAGE_SUBSCRIPTION,
