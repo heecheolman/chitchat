@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import gql from 'graphql-tag';
 import { useMutation } from 'react-apollo-hooks';
 import { Store } from '../store';
@@ -49,7 +49,8 @@ const MESSAGE_SUBSCRIPTION = gql`
   }
 `;
 
-let unsubscribe: any = null;
+let subscription: any = null;
+
 
 const ChatRoomTemplate: React.FC<{ match: any }> = ({ match }) => {
   console.log('ChatRoom Template Rendered!');
@@ -64,6 +65,11 @@ const ChatRoomTemplate: React.FC<{ match: any }> = ({ match }) => {
       content
     }
   });
+  //
+  // useEffect(() => {
+  //   console.log('useEffect', subscription);
+  //   return () => subscription.unsubscribe()
+  // });
 
   /** Input 이벤트 */
   const onChange = (e: any) => {
@@ -97,8 +103,8 @@ const ChatRoomTemplate: React.FC<{ match: any }> = ({ match }) => {
             }
             // TODO subscribe 변경
             // 현재 특정 채팅방만 subscribe 하고있음
-            if (!unsubscribe) {
-              unsubscribe = subscribeToMore({
+            if (!subscription) {
+              subscription = subscribeToMore({
                 document: MESSAGE_SUBSCRIPTION,
                 variables: {
                   chatRoomId: +chatRoomId
@@ -110,7 +116,6 @@ const ChatRoomTemplate: React.FC<{ match: any }> = ({ match }) => {
                   }
 
                   const { messageCreated } = subscriptionData.data;
-                  console.log('prev :: ', prev);
 
                   return {
                     ...prev,
@@ -135,11 +140,13 @@ const ChatRoomTemplate: React.FC<{ match: any }> = ({ match }) => {
                       )
                   }
                 </div>
-                <Input value={content}
+                <input type="text"
                        onChange={onChange}
-                       onClick={onClick}
-                       onKeyPress={onKeyPress}
                 />
+                {/*<Input value={content}*/}
+                       {/*onChange={onChange}*/}
+                       {/*onClick={onClick}*/}
+                       {/*onKeyPress={onKeyPress}*/}
               </>
             )
           }

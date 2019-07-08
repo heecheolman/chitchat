@@ -41,8 +41,6 @@ const ChatListTemplate: React.FC = () => {
             return null;
           }
 
-          console.log('unsubscribe', unsubscribe);
-
           if (!unsubscribe) {
             unsubscribe = subscribeToMore({
               document: CHAT_ROOM_SUBSCRIPTION,
@@ -51,7 +49,6 @@ const ChatListTemplate: React.FC = () => {
                   return prev;
                 }
                 const { chatRoomCreated } = subscriptionData.data;
-                console.log('prev', prev);
                 return {
                   ...prev,
                   chatRooms: [

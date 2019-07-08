@@ -24,7 +24,6 @@ const EntryTemplate: React.FC = () => {
     update: (proxy, { data }) => {
       const { id } = data.createUser;
       Store.setState({ id });
-      console.log('Store Data', Store.instance);
     }
   });
 
