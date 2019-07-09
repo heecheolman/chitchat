@@ -12,12 +12,11 @@ import Test from './Test';
 const MainFrame: React.FC = () => (
   <div className={styles['main-frame']}>
     <ChatHeader userName={Store.instance.userName}/>
-    <Test />
-    {/*<Switch>*/}
-      {/*<Route path="/app" component={EntryTemplate} />*/}
-      {/*<Route path="/chatrooms/:id" component={ChatRoomTemplate} />*/}
-      {/*<Route path="/chatrooms" component={ChatListTemplate} />*/}
-    {/*</Switch>*/}
+    <Switch>
+      <Route path="/app" component={EntryTemplate} />
+      <Route path="/chatrooms/:id" component={ChatRoomTemplate} />
+      <Route path="/chatrooms" component={ChatListTemplate} />
+    </Switch>
   </div>
 );
 
