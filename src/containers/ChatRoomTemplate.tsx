@@ -3,7 +3,6 @@ import gql from 'graphql-tag';
 import { useMutation } from 'react-apollo-hooks';
 import { Store } from '../store';
 import { Query } from 'react-apollo';
-import Input from '../components/Input';
 import { IMessage } from '../interfaces';
 import Message from '../components/Message';
 
@@ -51,7 +50,10 @@ const MESSAGE_SUBSCRIPTION = gql`
 
 let subscription: any = null;
 
-class ChatRoomTemplate extends React.Component {
+class ChatRoomTemplate extends React.Component<any, { chatRoomId: number; userId: number; content: string; }> {
+
+  private _subscription: any = null;
+
   constructor(props: any) {
     super(props);
     const { match: { params }} = props;
@@ -85,23 +87,58 @@ class ChatRoomTemplate extends React.Component {
   render() {
     return (
       <>
-        {/*<h3>ChatRoomTemplate :{ this.state.chatRoomId }</h3>*/}
-        <h4>메세지들</h4>
-        {/*<div>*/}
-          {/*{*/}
-            {/*data.messages.map(*/}
-              {/*(message: IMessage) =>*/}
-                {/*<Message key={message.id} message={message} />*/}
-            {/*)*/}
-          {/*}*/}
-        {/*</div>*/}
-        <input type="text"
-               onChange={this.onChange}
-        />
-        {/*<Input value={content}*/}
-        {/*onChange={onChange}*/}
-        {/*onClick={onClick}*/}
-        {/*onKeyPress={onKeyPress}*/}
+        <Query query={MESSAGE_QUERY} variables={{ chatRoomId: this.state.chatRoomId }}>
+          {
+            ({ loading, data, subscribeToMore }: any) => {
+
+              if (loading) {
+                return null;
+              }
+
+              if (!this._subscription) {
+                this._subscription = subscribeToMore({
+                  document: MESSAGE_SUBSCRIPTION,
+                  variables: {
+                    chatRoomId: +this.state.chatRoomId
+                  },
+                  updateQuery(prev: any, { subscriptionData }: any) {
+                    if (!subscriptionData.data) {
+                      return prev;
+                    }
+                    const { messageCreated } = subscriptionData.data;
+                    return {
+                      ...prev,
+                      messages: [
+                        ...prev.messages,
+                        messageCreated
+                      ]
+                    };
+                  },
+                })
+              }
+
+              return (
+                <>
+                  <h3>ChatRoomTemplate :{ this.state.chatRoomId }</h3>
+                  <h4>메세지들</h4>
+                  <div>
+                    {
+                      data.messages.map((message: IMessage) =>
+                        <Message key={message.id} message={message} />
+                      )
+                    }
+                  </div>
+                  <input type="text"
+                         value={this.state.content}
+                         onChange={this.onChange}
+                         onKeyPress={this.onKeyPress} />
+                  <button onClick={this.onClick}>전송</button>
+                </>
+              )
+            }
+          }
+        </Query>
+
       </>
     )
   }
