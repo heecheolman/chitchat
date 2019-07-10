@@ -5,6 +5,7 @@ import { Store } from '../store';
 import { Mutation, Query } from 'react-apollo';
 import { IMessage } from '../interfaces';
 import Message from '../components/Message';
+import Input from '../components/Input';
 
 const MESSAGE_MUTATION = gql`
   mutation createMessage($chatRoomId: Int!, $userId: Int!, $content: String!) {
@@ -72,27 +73,7 @@ class ChatRoomTemplate extends React.Component<any, { chatRoomId: number; userId
     });
   }
 
-  onChange = (e: any) => {
-    this.setState({
-      content: e.target.value
-    });
-  };
 
-  onClick = (e: any) => {
-    this._mutation();
-    this.setState({
-      content: '',
-    });
-
-  };
-  onKeyPress = (e: any) => {
-    if (e.key === 'Enter') {
-      this._mutation();
-      this.setState({
-        content: '',
-      });
-    }
-  };
 
   render() {
     return (
@@ -140,25 +121,7 @@ class ChatRoomTemplate extends React.Component<any, { chatRoomId: number; userId
                       )
                     }
                   </div>
-                  <Mutation mutation={MESSAGE_MUTATION} variables={{
-                    chatRoomId: this.state.chatRoomId,
-                    userId: this.state.userId,
-                    content: this.state.content
-                  }}>
-                    {
-                      (createMessage: any, { data, loading, error }: any) => {
-                        return (
-                          <>
-                            <input type="text"
-                                   value={this.state.content}
-                                   onChange={this.onChange}
-                                   onKeyPress={this.onKeyPress} />
-                            <button onClick={this.onClick}>전송</button>
-                          </>
-                        )
-                      }
-                    }
-                  </Mutation>
+                  <Input />
                 </>
               )
             }
