@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import gql from 'graphql-tag';
 import { useMutation } from 'react-apollo-hooks';
 import { Store } from '../store';
-import { Query } from 'react-apollo';
+import { Mutation, Query } from 'react-apollo';
 import { IMessage } from '../interfaces';
 import Message from '../components/Message';
 
@@ -53,6 +53,7 @@ let subscription: any = null;
 class ChatRoomTemplate extends React.Component<any, { chatRoomId: number; userId: number; content: string; }> {
 
   private _subscription: any = null;
+  private _mutation: any = null;
 
   constructor(props: any) {
     super(props);
@@ -61,7 +62,14 @@ class ChatRoomTemplate extends React.Component<any, { chatRoomId: number; userId
       chatRoomId: +params.id,
       userId: +Store.instance.id,
       content: '',
-    }
+    };
+    this._mutation = useMutation(MESSAGE_MUTATION, {
+      variables: {
+        chatRoomId: this.state.chatRoomId,
+        userId: this.state.userId,
+        content: this.state.content
+      }
+    });
   }
 
   onChange = (e: any) => {
@@ -71,6 +79,7 @@ class ChatRoomTemplate extends React.Component<any, { chatRoomId: number; userId
   };
 
   onClick = (e: any) => {
+    this._mutation();
     this.setState({
       content: '',
     });
@@ -78,6 +87,7 @@ class ChatRoomTemplate extends React.Component<any, { chatRoomId: number; userId
   };
   onKeyPress = (e: any) => {
     if (e.key === 'Enter') {
+      this._mutation();
       this.setState({
         content: '',
       });
@@ -106,6 +116,8 @@ class ChatRoomTemplate extends React.Component<any, { chatRoomId: number; userId
                       return prev;
                     }
                     const { messageCreated } = subscriptionData.data;
+
+                    console.log(data);
                     return {
                       ...prev,
                       messages: [
@@ -128,11 +140,25 @@ class ChatRoomTemplate extends React.Component<any, { chatRoomId: number; userId
                       )
                     }
                   </div>
-                  <input type="text"
-                         value={this.state.content}
-                         onChange={this.onChange}
-                         onKeyPress={this.onKeyPress} />
-                  <button onClick={this.onClick}>전송</button>
+                  <Mutation mutation={MESSAGE_MUTATION} variables={{
+                    chatRoomId: this.state.chatRoomId,
+                    userId: this.state.userId,
+                    content: this.state.content
+                  }}>
+                    {
+                      (createMessage: any, { data, loading, error }: any) => {
+                        return (
+                          <>
+                            <input type="text"
+                                   value={this.state.content}
+                                   onChange={this.onChange}
+                                   onKeyPress={this.onKeyPress} />
+                            <button onClick={this.onClick}>전송</button>
+                          </>
+                        )
+                      }
+                    }
+                  </Mutation>
                 </>
               )
             }
