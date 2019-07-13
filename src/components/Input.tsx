@@ -64,6 +64,7 @@ class Input extends React.Component<any, { chatRoomId: number; userId: number; c
                        onChange={this.onChange}
                        onKeyPress={this.onKeyPress}
                 />
+                <button onClick={this.onClick}>전송</button>
               </>
             )
           }
