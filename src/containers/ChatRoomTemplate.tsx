@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import gql from 'graphql-tag';
 import { Store } from '../store';
 import { Query } from 'react-apollo';
@@ -34,82 +34,77 @@ const MESSAGE_SUBSCRIPTION = gql`
   }
 `;
 
-class ChatRoomTemplate extends React.Component<any, { chatRoomId: number; userId: number; content: string; }> {
+let subscription: any = null;
 
-  private _subscription: any = null;
+const ChatRoomTemplate: React.FC<{ match: any; }> = ({
+  match
+}) => {
+  const chatRoomId = +match.params.id;
+  const userId = +Store.instance.id;
 
-  constructor(props: any) {
-    super(props);
-    const { match: { params }} = props;
-    this.state = {
-      chatRoomId: +params.id,
-      userId: +Store.instance.id,
-      content: '',
-    };
-  }
+  useEffect(() => {
+    return () => {
+      console.log('component will unmount');
+      subscription = null;
+    }
+  });
 
-  render() {
-    console.log('this._subscription, userId :: ', this._subscription, this.state.userId);
-    return (
-      <>
-        <Query query={MESSAGE_QUERY} variables={{ chatRoomId: this.state.chatRoomId }}>
-          {
-            ({ loading, data, subscribeToMore }: any) => {
-              if (loading) {
-                return null;
-              }
-
-              console.log('data :: ', data);
-
-              if (!this._subscription) {
-                console.log('구독');
-                this._subscription = subscribeToMore({
-                  document: MESSAGE_SUBSCRIPTION,
-                  variables: {
-                    chatRoomId: +this.state.chatRoomId
-                  },
-                  updateQuery(prev: any, { subscriptionData }: any) {
-                    if (!subscriptionData.data) {
-                      return prev;
-                    }
-                    const { createdMessage } = subscriptionData.data;
-                    return {
-                      ...prev,
-                      messages: [
-                        ...prev.messages,
-                        createdMessage
-                      ]
-                    };
-                  },
-                })
-              }
-
-              return (
-                <>
-                  <h3>ChatRoomTemplate :{ this.state.chatRoomId }</h3>
-                  <h4>메세지들</h4>
-                  <div>
-                    {
-                      data.messages.map((message: IMessage) =>
-                        <Message key={message.id} message={message} />
-                      )
-                    }
-                  </div>
-                  <Input chatRoomId={this.state.chatRoomId}
-                         userId={this.state.userId} />
-                </>
-              )
+  return (
+    <>
+      <Query query={MESSAGE_QUERY}
+             variables={{ chatRoomId: +chatRoomId }}
+      >
+        {
+          ({ loading, data, subscribeToMore }: any) => {
+            if (loading) {
+              return null;
             }
+
+            if (!subscription) {
+              console.log('구독');
+              subscription = subscribeToMore({
+                document: MESSAGE_SUBSCRIPTION,
+                variables: {
+                  chatRoomId: +chatRoomId
+                },
+                updateQuery(prev: any, { subscriptionData }: any) {
+                  if (!subscriptionData.data) {
+                    return prev;
+                  }
+                  const { createdMessage } = subscriptionData.data;
+                  console.log('data :: ', data);
+                  console.log('subscriptionData.data :: ', subscriptionData.data);
+                  return {
+                    ...prev,
+                    messages: [
+                      ...prev.messages,
+                      createdMessage
+                    ]
+                  };
+                },
+              })
+            }
+
+            return (
+              <>
+                <h3>ChatRoomTemplate :{ chatRoomId }</h3>
+                <h4>메세지들</h4>
+                <div>
+                  {
+                    data.messages.map((message: IMessage) =>
+                      <Message key={message.id} message={message} />
+                    )
+                  }
+                </div>
+                <Input chatRoomId={chatRoomId}
+                       userId={userId} />
+              </>
+            )
           }
-        </Query>
-
-      </>
-    )
-  }
-
-  componentWillUnmount(): void {
-    this._subscription = null;
-  }
-}
+        }
+      </Query>
+    </>
+  );
+};
 
 export default ChatRoomTemplate;

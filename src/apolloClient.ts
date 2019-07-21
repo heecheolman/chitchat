@@ -30,11 +30,6 @@ const link = split(
 const client = new ApolloClient({
   link,
   cache: new InMemoryCache(),
-  defaultOptions: {
-    query: {
-      fetchPolicy: 'no-cache'
-    }
-  }
 });
 
 export default client;
