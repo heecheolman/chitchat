@@ -26,27 +26,6 @@ class Input extends React.Component<any, { chatRoomId: number; userId: number; c
     };
   }
 
-  onChange = (e: any) => {
-    this.setState({
-      content: e.target.value
-    });
-  };
-
-  onClick = (e: any) => {
-    this.setState({
-      content: '',
-    });
-
-  };
-  onKeyPress = (e: any) => {
-    if (e.key === 'Enter') {
-      this._mutation();
-      this.setState({
-        content: '',
-      });
-    }
-  };
-
   render() {
     return (
       <Mutation mutation={MESSAGE_MUTATION} variables={{
@@ -55,16 +34,38 @@ class Input extends React.Component<any, { chatRoomId: number; userId: number; c
         content: this.state.content
       }}>
         {
-          () => {
+          (mutation: Function, { loading }: any) => {
+            const onChange = (event: any) => {
+              this.setState({
+                content: event.target.value
+              });
+            };
+
+            const onClick = (event: any) => {
+              mutation();
+              this.setState({
+                content: ''
+              });
+            };
+
+            const onKeyPress = (event: any) => {
+              if (event.key === 'Enter') {
+                mutation();
+                this.setState({
+                  content: ''
+                });
+              }
+            };
+
             return (
               <>
                 <input type="text"
                        value={this.state.content}
                        placeholder="내용 입력"
-                       onChange={this.onChange}
-                       onKeyPress={this.onKeyPress}
+                       onChange={onChange}
+                       onKeyPress={onKeyPress}
                 />
-                <button onClick={this.onClick}>전송</button>
+                <button onClick={onClick}>전송</button>
               </>
             )
           }

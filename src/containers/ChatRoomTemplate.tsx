@@ -1,25 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import gql from 'graphql-tag';
-import { useMutation } from 'react-apollo-hooks';
 import { Store } from '../store';
-import { Mutation, Query } from 'react-apollo';
+import { Query } from 'react-apollo';
 import { IMessage } from '../interfaces';
 import Message from '../components/Message';
 import Input from '../components/Input';
-
-const MESSAGE_MUTATION = gql`
-  mutation createMessage($chatRoomId: Int!, $userId: Int!, $content: String!) {
-    createMessage(chatRoomId: $chatRoomId, userId: $userId, content: $content) {
-      id
-      content
-      createdBy {
-        id
-        userName
-      }
-      createdAt
-    }
-  }
-`;
 
 const MESSAGE_QUERY = gql`
   query messages($chatRoomId: Int!){
@@ -49,12 +34,9 @@ const MESSAGE_SUBSCRIPTION = gql`
   }
 `;
 
-let subscription: any = null;
-
 class ChatRoomTemplate extends React.Component<any, { chatRoomId: number; userId: number; content: string; }> {
 
   private _subscription: any = null;
-  private _mutation: any = null;
 
   constructor(props: any) {
     super(props);
@@ -64,13 +46,6 @@ class ChatRoomTemplate extends React.Component<any, { chatRoomId: number; userId
       userId: +Store.instance.id,
       content: '',
     };
-    this._mutation = useMutation(MESSAGE_MUTATION, {
-      variables: {
-        chatRoomId: this.state.chatRoomId,
-        userId: this.state.userId,
-        content: this.state.content
-      }
-    });
   }
 
 
@@ -97,7 +72,7 @@ class ChatRoomTemplate extends React.Component<any, { chatRoomId: number; userId
                       return prev;
                     }
                     const { messageCreated } = subscriptionData.data;
-
+                    console.log(subscriptionData);
                     console.log(data);
                     return {
                       ...prev,
@@ -121,7 +96,8 @@ class ChatRoomTemplate extends React.Component<any, { chatRoomId: number; userId
                       )
                     }
                   </div>
-                  <Input />
+                  <Input chatRoomId={this.state.chatRoomId}
+                         userId={this.state.userId} />
                 </>
               )
             }
