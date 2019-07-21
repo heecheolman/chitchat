@@ -22,7 +22,7 @@ const MESSAGE_QUERY = gql`
 
 const MESSAGE_SUBSCRIPTION = gql`
   subscription messageCreated($chatRoomId: Int!) {
-    messageCreated(chatRoomId: $chatRoomId) {
+    createdMessage: messageCreated(chatRoomId: $chatRoomId) {
       id
       content
       createdBy {
@@ -48,20 +48,21 @@ class ChatRoomTemplate extends React.Component<any, { chatRoomId: number; userId
     };
   }
 
-
-
   render() {
+    console.log('this._subscription, userId :: ', this._subscription, this.state.userId);
     return (
       <>
         <Query query={MESSAGE_QUERY} variables={{ chatRoomId: this.state.chatRoomId }}>
           {
             ({ loading, data, subscribeToMore }: any) => {
-
               if (loading) {
                 return null;
               }
 
+              console.log('data :: ', data);
+
               if (!this._subscription) {
+                console.log('구독');
                 this._subscription = subscribeToMore({
                   document: MESSAGE_SUBSCRIPTION,
                   variables: {
@@ -71,14 +72,12 @@ class ChatRoomTemplate extends React.Component<any, { chatRoomId: number; userId
                     if (!subscriptionData.data) {
                       return prev;
                     }
-                    const { messageCreated } = subscriptionData.data;
-                    console.log(subscriptionData);
-                    console.log(data);
+                    const { createdMessage } = subscriptionData.data;
                     return {
                       ...prev,
                       messages: [
                         ...prev.messages,
-                        messageCreated
+                        createdMessage
                       ]
                     };
                   },
@@ -107,113 +106,10 @@ class ChatRoomTemplate extends React.Component<any, { chatRoomId: number; userId
       </>
     )
   }
+
+  componentWillUnmount(): void {
+    this._subscription = null;
+  }
 }
 
 export default ChatRoomTemplate;
-
-// const ChatRoomTemplate: React.FC<{ match: any }> = ({ match }) => {
-//   console.log('ChatRoom Template Rendered!');
-//   const [content, setContent] = useState('');
-//
-//   const chatRoomId = +match.params.id;
-//   const userId = +Store.instance.id;
-//   const mutation = useMutation(MESSAGE_MUTATION, {
-//     variables: {
-//       chatRoomId,
-//       userId,
-//       content
-//     }
-//   });
-//   //
-//   // useEffect(() => {
-//   //   console.log('useEffect', subscription);
-//   //   return () => subscription.unsubscribe()
-//   // });
-//
-//   /** Input 이벤트 */
-//   const onChange = (e: any) => {
-//     setContent(e.target.value);
-//   };
-//   const onClick = () => {
-//     setContent('');
-//     mutation();
-//   };
-//   const onKeyPress = (e: any) => {
-//     if (e.key === 'Enter') {
-//       setContent('');
-//       mutation();
-//     }
-//   };
-//
-//   /**
-//    * 1. 채팅방에 들어오면 subscription 시작
-//    * 2. 나가면 subscription 종료
-//    * 3.
-//    */
-//
-//   return (
-//     <>
-//       <Query query={MESSAGE_QUERY} variables={{ chatRoomId: +chatRoomId }}>
-//         {
-//           ({ loading, data, subscribeToMore }: any) => {
-//
-//             if (loading) {
-//               return null;
-//             }
-//             // TODO subscribe 변경
-//             // 현재 특정 채팅방만 subscribe 하고있음
-//             if (!subscription) {
-//               subscription = subscribeToMore({
-//                 document: MESSAGE_SUBSCRIPTION,
-//                 variables: {
-//                   chatRoomId: +chatRoomId
-//                 },
-//                 updateQuery: (prev: any, { subscriptionData }: any) => {
-//
-//                   if (!subscriptionData.data) {
-//                     return prev;
-//                   }
-//
-//                   const { messageCreated } = subscriptionData.data;
-//
-//                   return {
-//                     ...prev,
-//                     messages: [
-//                       ...prev.messages,
-//                       messageCreated,
-//                     ]
-//                   }
-//                 }
-//               })
-//             }
-//
-//             return (
-              {/*<>*/}
-                {/*<h3>ChatRoomTemplate :{ chatRoomId }</h3>*/}
-                {/*<h4>메세지들</h4>*/}
-                {/*<div>*/}
-                  {/*{*/}
-                    {/*data.messages.map(*/}
-                      {/*(message: IMessage) =>*/}
-                        {/*<Message key={message.id} message={message} />*/}
-                      {/*)*/}
-                  {/*}*/}
-                {/*</div>*/}
-                {/*<input type="text"*/}
-                       {/*onChange={onChange}*/}
-                {/*/>*/}
-                {/*/!*<Input value={content}*!/*/}
-                       {/*/!*onChange={onChange}*!/*/}
-                       {/*/!*onClick={onClick}*!/*/}
-                       {/*/!*onKeyPress={onKeyPress}*!/*/}
-              {/*</>*/}
-//             )
-//           }
-//         }
-//
-//       </Query>
-//     </>
-//   )
-// };
-//
-// export default ChatRoomTemplate;
