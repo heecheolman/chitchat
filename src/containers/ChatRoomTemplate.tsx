@@ -89,27 +89,24 @@ const queryBuilder = (fragments: any[]) => {
   const fragmentGql: any[] = fragments.map(f => f.fragment);
   const fragmentNames = fragments.map(f => f.fragmentName);
 
-  // let stringedNames = '';
-  // fragmentNames.forEach(name => {
-  //   stringedNames += `...${name}\n`
-  // });
-  //
-  // let stringedFragments = '';
-  // fragmentGql.forEach(fragment => {
-  //   stringedFragments += `${fragment}\n`
-  // });
+  let stringedFragment = '';
+  fragmentGql.forEach(f => {
+    stringedFragment += f.loc.source.body + '\n';
+  });
 
-  const foo = `${fragmentGql.join('\n')}`;
-  console.log(foo);
+  let stringedNames = '';
+  fragmentNames.forEach(n => {
+    stringedNames += '...' + n + '\n';
+  });
 
   return gql`
     query getAllData {
       allData {
-        ${fragmentGql.join('\n')}
+        ${stringedNames}
       }
     }
+    ${stringedFragment}
   `
-
 };
 
 const MESSAGE_SUBSCRIPTION = gql`
@@ -136,6 +133,17 @@ const ChatRoomTemplate: React.FC<{ match: any; }> = ({
 
   const mainQuery = queryBuilder([fragmentA, fragmentB]);
   console.log('mainQuery :: ', mainQuery);
+  const mainQuery2 = gql`
+    query foo {
+      foo {
+        ...foo
+        ...bar
+      }
+      ${FOO_Fragment}
+      ${BAR_Fragment}
+    }
+  `;
+  console.log(mainQuery2);
 
   useEffect(() => {
     return () => {
@@ -143,6 +151,8 @@ const ChatRoomTemplate: React.FC<{ match: any; }> = ({
       subscription = null;
     }
   });
+
+  console.log('MESSAGE_QUERY :: ', MESSAGE_QUERY);
 
   return (
     <>
