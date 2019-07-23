@@ -20,6 +20,98 @@ const MESSAGE_QUERY = gql`
   }
 `;
 
+const FOO_Fragment = gql`
+  fragment foo on allDataQuery {
+    foo: allData {
+      foo
+      bar
+    }
+  }
+`;
+
+const BAR_Fragment = gql`
+  fragment bar on allDataQuery {
+    bar: allData {
+      foo
+      bar
+    }
+  }
+`;
+
+const queryA = gql`
+  query getAQuery {
+    aList {
+      a
+      aa
+      aaa
+    }
+  }
+`;
+
+const queryB = gql`
+  query getBQuery {
+    bList {
+      b
+      bb
+      bbb
+    }
+  }
+`;
+
+const fragmentA = {
+  fragmentName: 'fragmentA',
+  fragment: gql`
+    fragment fragA on getData {
+      aList {
+        a
+        aa
+        aaa
+      }
+    }
+`
+};
+
+const fragmentB = {
+  fragmentName: 'fragmentB',
+  fragment: gql`
+    fragment fragB on getData {
+      bList {
+        b
+        bb
+        bbb
+      }
+    }
+`
+};
+
+
+const queryBuilder = (fragments: any[]) => {
+  const fragmentGql: any[] = fragments.map(f => f.fragment);
+  const fragmentNames = fragments.map(f => f.fragmentName);
+
+  // let stringedNames = '';
+  // fragmentNames.forEach(name => {
+  //   stringedNames += `...${name}\n`
+  // });
+  //
+  // let stringedFragments = '';
+  // fragmentGql.forEach(fragment => {
+  //   stringedFragments += `${fragment}\n`
+  // });
+
+  const foo = `${fragmentGql.join('\n')}`;
+  console.log(foo);
+
+  return gql`
+    query getAllData {
+      allData {
+        ${fragmentGql.join('\n')}
+      }
+    }
+  `
+
+};
+
 const MESSAGE_SUBSCRIPTION = gql`
   subscription messageCreated($chatRoomId: Int!) {
     createdMessage: messageCreated(chatRoomId: $chatRoomId) {
@@ -42,6 +134,9 @@ const ChatRoomTemplate: React.FC<{ match: any; }> = ({
   const chatRoomId = +match.params.id;
   const userId = +Store.instance.id;
 
+  const mainQuery = queryBuilder([fragmentA, fragmentB]);
+  console.log('mainQuery :: ', mainQuery);
+
   useEffect(() => {
     return () => {
       console.log('component will unmount');
@@ -53,6 +148,7 @@ const ChatRoomTemplate: React.FC<{ match: any; }> = ({
     <>
       <Query query={MESSAGE_QUERY}
              variables={{ chatRoomId: +chatRoomId }}
+             fetchPolicy={'network-only'}
       >
         {
           ({ loading, data, subscribeToMore }: any) => {
@@ -61,7 +157,6 @@ const ChatRoomTemplate: React.FC<{ match: any; }> = ({
             }
 
             if (!subscription) {
-              console.log('구독');
               subscription = subscribeToMore({
                 document: MESSAGE_SUBSCRIPTION,
                 variables: {
@@ -72,8 +167,6 @@ const ChatRoomTemplate: React.FC<{ match: any; }> = ({
                     return prev;
                   }
                   const { createdMessage } = subscriptionData.data;
-                  console.log('data :: ', data);
-                  console.log('subscriptionData.data :: ', subscriptionData.data);
                   return {
                     ...prev,
                     messages: [
