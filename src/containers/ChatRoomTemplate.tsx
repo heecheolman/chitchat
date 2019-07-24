@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import gql from 'graphql-tag';
 import { Store } from '../store';
 import { Query } from 'react-apollo';
@@ -19,95 +19,6 @@ const MESSAGE_QUERY = gql`
     }
   }
 `;
-
-const FOO_Fragment = gql`
-  fragment foo on allDataQuery {
-    foo: allData {
-      foo
-      bar
-    }
-  }
-`;
-
-const BAR_Fragment = gql`
-  fragment bar on allDataQuery {
-    bar: allData {
-      foo
-      bar
-    }
-  }
-`;
-
-const queryA = gql`
-  query getAQuery {
-    aList {
-      a
-      aa
-      aaa
-    }
-  }
-`;
-
-const queryB = gql`
-  query getBQuery {
-    bList {
-      b
-      bb
-      bbb
-    }
-  }
-`;
-
-const fragmentA = {
-  fragmentName: 'fragmentA',
-  fragment: gql`
-    fragment fragA on getData {
-      aList {
-        a
-        aa
-        aaa
-      }
-    }
-`
-};
-
-const fragmentB = {
-  fragmentName: 'fragmentB',
-  fragment: gql`
-    fragment fragB on getData {
-      bList {
-        b
-        bb
-        bbb
-      }
-    }
-`
-};
-
-
-const queryBuilder = (fragments: any[]) => {
-  const fragmentGql: any[] = fragments.map(f => f.fragment);
-  const fragmentNames = fragments.map(f => f.fragmentName);
-
-  let stringedFragment = '';
-  fragmentGql.forEach(f => {
-    stringedFragment += f.loc.source.body + '\n';
-  });
-
-  let stringedNames = '';
-  fragmentNames.forEach(n => {
-    stringedNames += '...' + n + '\n';
-  });
-
-  return gql`
-    query getAllData {
-      allData {
-        ${stringedNames}
-      }
-    }
-    ${stringedFragment}
-  `
-};
 
 const MESSAGE_SUBSCRIPTION = gql`
   subscription messageCreated($chatRoomId: Int!) {
@@ -131,28 +42,11 @@ const ChatRoomTemplate: React.FC<{ match: any; }> = ({
   const chatRoomId = +match.params.id;
   const userId = +Store.instance.id;
 
-  const mainQuery = queryBuilder([fragmentA, fragmentB]);
-  console.log('mainQuery :: ', mainQuery);
-  const mainQuery2 = gql`
-    query foo {
-      foo {
-        ...foo
-        ...bar
-      }
-      ${FOO_Fragment}
-      ${BAR_Fragment}
-    }
-  `;
-  console.log(mainQuery2);
-
   useEffect(() => {
     return () => {
-      console.log('component will unmount');
       subscription = null;
     }
   });
-
-  console.log('MESSAGE_QUERY :: ', MESSAGE_QUERY);
 
   return (
     <>
