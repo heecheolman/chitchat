@@ -5,7 +5,6 @@ import { Store } from '../store';
 
 const ChatHeader: React.FC = () => {
   const userName = Store.instance.userName;
-  console.log('Store', Store.instance);
   return (
     <>
       <div className={styles.chatHeader}>

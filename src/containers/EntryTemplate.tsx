@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Store } from '../store';
+import styles from './EntryTemplate.module.scss';
 import gql from 'graphql-tag';
 import { useMutation } from 'react-apollo-hooks';
 
@@ -28,7 +29,7 @@ const EntryTemplate: React.FC = () => {
   });
 
   return (
-    <>
+    <div className={styles.entryContainer}>
       닉네임 설정:
       <input type="text"
              onChange={(e) => setUserName(e.target.value)}
@@ -41,7 +42,7 @@ const EntryTemplate: React.FC = () => {
                 }}
         >채팅하러가기!</button>
       </Link>
-    </>
+    </div>
   );
 };
 
