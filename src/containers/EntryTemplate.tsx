@@ -4,6 +4,7 @@ import { Store } from '../store';
 import styles from './EntryTemplate.module.scss';
 import gql from 'graphql-tag';
 import { useMutation } from 'react-apollo-hooks';
+import { FiChevronRight } from 'react-icons/fi';
 
 
 /** createUser Mutation */
@@ -29,20 +30,36 @@ const EntryTemplate: React.FC = () => {
   });
 
   return (
-    <div className={styles.entryContainer}>
-      닉네임 설정:
-      <input type="text"
-             onChange={(e) => setUserName(e.target.value)}
-      />
-      <Link to="chatrooms">
-        <button disabled={userName.length < 3}
-                onClick={() => {
-                  Store.setState({ userName });
-                  mutation();
-                }}
-        >채팅하러가기!</button>
-      </Link>
-    </div>
+    <>
+      <div className={styles.entryContainer}>
+        <input type="text"
+               className={styles.nickNameInput}
+               placeholder="닉네임을 설정해줘!"
+               onChange={(e) => setUserName(e.target.value)}
+        />
+        {/*<Link to="chatrooms">*/}
+        {/*<button disabled={userName.length < 3}*/}
+        {/*onClick={() => {*/}
+        {/*Store.setState({ userName });*/}
+        {/*mutation();*/}
+        {/*}}*/}
+        {/*>채팅하러가기!</button>*/}
+        {/*</Link>*/}
+      </div>
+      <div className={styles.entryContainer}>
+        {
+          userName.length > 4 &&
+          <button className={styles.linkButton}
+                  onClick={() => {
+                    Store.setState({ userName });
+                    mutation();
+                  }
+          }>chitchat
+            <FiChevronRight />
+          </button>
+        }
+      </div>
+    </>
   );
 };
 
