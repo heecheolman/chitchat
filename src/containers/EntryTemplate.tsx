@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Store } from '../store';
 import styles from './EntryTemplate.module.scss';
 import gql from 'graphql-tag';
@@ -37,14 +36,6 @@ const EntryTemplate: React.FC = () => {
                placeholder="닉네임을 설정해줘!"
                onChange={(e) => setUserName(e.target.value)}
         />
-        {/*<Link to="chatrooms">*/}
-        {/*<button disabled={userName.length < 3}*/}
-        {/*onClick={() => {*/}
-        {/*Store.setState({ userName });*/}
-        {/*mutation();*/}
-        {/*}}*/}
-        {/*>채팅하러가기!</button>*/}
-        {/*</Link>*/}
       </div>
       <div className={styles.entryContainer}>
         {
