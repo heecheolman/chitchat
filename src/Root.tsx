@@ -6,7 +6,7 @@ import client from './apolloClient';
 import { ApolloProvider } from 'react-apollo';
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
 import App from './App';
-import ChatRoomTemplate from './containers/ChatRoomTemplate';
+import InChatRoom from './containers/InChatRoom';
 import ChatRoomList from './components/ChatRoomList/ChatRoomList';
 
 const Root = () => (
@@ -17,7 +17,7 @@ const Root = () => (
           <Switch>
             <Route exact path="/" component={EntryPage} />
             <Route exact path="/chatrooms" component={ChatRoomList} />
-            <Route exact path="/chatrooms/:id" component={ChatRoomTemplate} />
+            <Route exact path="/chatrooms/:id" component={InChatRoom} />
             <Redirect to="/" />
           </Switch>
         </BrowserRouter>

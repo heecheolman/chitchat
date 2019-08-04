@@ -8,6 +8,7 @@ import styles from './ChatRoomList.module.scss';
 import ChatRoom from './ChatRoom';
 import { useMutation } from 'react-apollo-hooks';
 import { Store } from '../../store';
+import ChatHeader from '../ChatHeader';
 
 const CHAT_ROOMS_QUERY = gql`
   query {
@@ -109,6 +110,7 @@ const ChatRoomList: React.FC = () => {
           }
           return (
             <>
+              <ChatHeader prevMeta={{ canPrev: true, url: '/' }} title={'채팅목록'} />
               <div className={backdrop ? styles.backdrop : styles.displayNone}>
                 <div className={styles.backdropNewChatWrap}>
                   <div className={styles.newChatHeader}>

@@ -10,7 +10,7 @@ Store.initState({
 const App: React.FC = (props) => (
   <div className="App">
     <div className="main-frame">
-      <ChatHeader />
+      {/*<ChatHeader />*/}
       <main className="main-wrap">{props.children}</main>
     </div>
   </div>

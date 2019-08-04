@@ -37,7 +37,7 @@ const MESSAGE_SUBSCRIPTION = gql`
 
 let subscription: any = null;
 
-const ChatRoomTemplate: React.FC<{ match: any; }> = ({
+const InChatRoom: React.FC<{ match: any; }> = ({
   match
 }) => {
   const chatRoomId = +match.params.id;
@@ -85,6 +85,7 @@ const ChatRoomTemplate: React.FC<{ match: any; }> = ({
 
             return (
               <>
+                <ChatHeader prevMeta={{ canPrev: true, url: '/chatrooms' }} title={'채팅'} />
                 <h3>ChatRoomTemplate :{ chatRoomId }</h3>
                 <h4>메세지들</h4>
                 <div>
@@ -105,4 +106,4 @@ const ChatRoomTemplate: React.FC<{ match: any; }> = ({
   );
 };
 
-export default ChatRoomTemplate;
+export default InChatRoom;

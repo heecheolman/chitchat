@@ -1,4 +1,5 @@
-@import './../scss/var'; @import './../scss/mixin';
+@import './../scss/var';
+@import './../scss/mixin';
 
 .chatHeader {
   display: flex;
@@ -35,12 +36,12 @@
     }
   }
 
-  .userNameWrap {
+  .titleWrap {
 
-    .userName {
+    .title {
       font-size: 16px;
       font-weight: bold;
-      color: #3d3d3d;
+      color: $app-normal;
     }
   }
 }
