@@ -77,6 +77,8 @@ const ChatRoomList: React.FC = () => {
 
   const newChat = () => {
     newChatMutation();
+    setRoomTitle('');
+    setRoomDesc('');
     setBackdrop(false);
   };
 
