@@ -12,7 +12,7 @@
     position: absolute;
     bottom: 0;
     width: 100%;
-    min-height: 300px;
+    //min-height: 300px;
     background: #fff;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
@@ -22,10 +22,23 @@
     .newChatHeader {
       display: flex;
       justify-content: flex-end;
+      padding: 0 10px;
 
       .close {
         @include simple-button;
         font-size: 20px;
+      }
+    }
+    .newChatBody {
+      padding: 20px;
+
+      .newChatActionButtonWrap {
+        display: flex;
+        justify-content: flex-end;
+
+        .newChatActionButton {
+          font-size: 20px;
+        }
       }
     }
   }
@@ -51,7 +64,7 @@
   margin: 10px 0;
   padding: 0;
   list-style: none;
-  min-height: 300px;
-  max-height: 70vh;
+  min-height: 60vh;
+  max-height: 60vh;
   overflow: scroll;
 }

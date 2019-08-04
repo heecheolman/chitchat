@@ -2,6 +2,8 @@ import React from 'react';
 import gql from 'graphql-tag';
 import { useMutation } from 'react-apollo-hooks';
 import { Store } from '../store';
+import styles from './NewChat.module.scss';
+import { FiPlus } from 'react-icons/fi';
 
 const CREATE_CHAT_ROOM = gql`
   mutation createChatRoom ($userId: Int!, $title: String!) {
@@ -39,12 +41,14 @@ const NewChat: React.FC<{ backdrop: any }> = ({ backdrop }) => {
   });
 
   return (
-    <>
-      <button onClick={() => {
+    <div className={styles.newChatWrap}>
+      <button className={`simple-button ${styles.newChatButton}`} onClick={() => {
         // mutation();
         backdrop(true);
-      }}>새로운채팅 만들기</button>
-    </>
+      }}>새로운채팅
+        {/*<FiPlus/>*/}
+      </button>
+    </div>
   );
 }
 

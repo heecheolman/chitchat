@@ -13,6 +13,7 @@ type Message {
 type ChatRoom {
     id: ID!
     title: String!
+    description: String!
     users: [User]!
     messages: [Message]!
 }
@@ -28,7 +29,7 @@ type Query {
 type Mutation {
     createMessage(chatRoomId: Int!, userId: Int!, content: String!): Message!
     createUser(userName: String!): User!
-    createChatRoom(userId: Int!, title: String!): ChatRoom!
+    createChatRoom(userId: Int!, title: String!, description: String!): ChatRoom!
     joinChatRoom(chatRoomId: Int!, userId: Int!): ChatRoom!
 }
 

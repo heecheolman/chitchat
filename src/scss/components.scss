@@ -1,0 +1,20 @@
+@import './mixin';
+@import './var';
+
+.simple-button {
+  @include simple-button;
+}
+
+.simple-input-wrap {
+  display: flex;
+  flex-direction: column;
+
+  .simple-input-label {
+    font-size: 14px;
+    color: $app-normal;
+    margin-bottom: 5px;
+  }
+  .simple-input {
+    @include simple-input;
+  }
+}
