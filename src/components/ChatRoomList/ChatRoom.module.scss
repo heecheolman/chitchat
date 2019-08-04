@@ -1,16 +1,30 @@
-@import './../../scss/mixin';
+@import './../../scss/var';
 
 .chatRoomWrap {
   height: 70px;
+  margin-bottom: 10px;
 
   .chatRoomLink {
-    display: block;
+    display: flex;
     width: 100%;
     height: 100%;
-    border-radius: 8px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
 
-    //&:hover {
-    //  @include shadow-box;
-    //}
+
+
+    border-radius: 8px;
+    color: $text-normal;
+    text-decoration: none;
+
+    .chatRoomTitle {
+      font-size: 20px;
+      color: $text-normal;
+    }
+    .chatRoomDescription {
+      font-size: 16px;
+      color: $text-weak;
+    }
   }
 }

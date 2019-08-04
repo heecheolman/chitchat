@@ -7,7 +7,12 @@ const ChatRoom: React.FC<{ chatRoom: any }> = ({ chatRoom }) => {
   return (
     <div className={styles.chatRoomWrap}>
       <Link className={styles.chatRoomLink} to={`/chatrooms/${chatRoom.id}`}>
-        {chatRoom.title}
+        <div className={styles.chatRoomTitle}>
+          {chatRoom.title}
+        </div>
+        <div className={styles.chatRoomDescription}>
+          설명설명설명설명설명설명설명설명설명설명설명설명설명설명
+        </div>
       </Link>
     </div>
   )
