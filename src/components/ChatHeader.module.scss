@@ -1,3 +1,5 @@
+@import './../scss/var';
+
 .chatHeader {
   display: flex;
   align-items: center;
@@ -5,7 +7,10 @@
 
   height: 50px;
   background-color: #fff;
-  border-radius: 4px;
+  margin: -$app-padding;
+  padding: $app-padding;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
   //box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px;
 
   .buttonBox {
@@ -16,11 +21,13 @@
       align-items: center;
       outline: none;
       border: none;
-      border-radius: 50%;
+      //border-radius: 50%;
       cursor: pointer;
       transition: 0.2s ease-out;
       padding: 0;
       font-size: 16px;
+      background-color: transparent;
+      color: $text-normal;
 
       .prevButtonIcon {
         font-size: 20px;

@@ -1,3 +1,5 @@
+@import './scss/var';
+
 * {
   box-sizing: border-box;
 }
@@ -13,4 +15,16 @@ html, body {
   height: 100vh;
   align-items: center;
   justify-content: center;
+
+  .main-frame {
+    width: 100%;
+    padding: $app-padding;
+    max-width: 400px;
+    min-height: 50%;
+    //max-height: 50%;
+    //border: 1px solid #e3e3e3;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 1px 10px;
+  }
+
 }

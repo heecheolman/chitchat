@@ -1,34 +1,19 @@
 import React from 'react';
-import { ApolloProvider } from 'react-apollo';
-import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
-
-import client from './apolloClient';
-
-import MainFrame from './containers/MainFrame';
 import { Store } from './store';
+import ChatHeader from './components/ChatHeader';
 
 Store.initState({
   userName: '',
   id: null,
 });
 
-class App extends React.Component {
-
-  constructor(props: any) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <ApolloProvider client={client}>
-        <ApolloHooksProvider client={client}>
-          <div className="App">
-            <MainFrame />
-          </div>
-        </ApolloHooksProvider>
-      </ApolloProvider>
-    );
-  }
-}
+const App: React.FC = (props) => (
+  <div className="App">
+    <div className="main-frame">
+      <ChatHeader />
+      <main>{props.children}</main>
+    </div>
+  </div>
+);
 
 export default App;

@@ -1,10 +1,12 @@
 import React from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
+
 import { Link } from 'react-router-dom';
 
-import NewChat from '../components/NewChat';
-import styles from './ChatListTemplate.module.scss';
+import NewChat from '../NewChat';
+import styles from './ChatRoomList.module.scss';
+import ChatRoom from './ChatRoom';
 
 const CHAT_ROOMS_QUERY = gql`
   query {
@@ -30,17 +32,14 @@ const CHAT_ROOM_SUBSCRIPTION = gql`
 
 let unsubscribe: any = null;
 
-const ChatListTemplate: React.FC = () => {
-  console.log('ChatListTemplate Rendered!');
+const ChatRoomList: React.FC = () => {
   return (
     <>
       <Query query={CHAT_ROOMS_QUERY}>
         {({ loading, data, subscribeToMore }: any) => {
-
           if (loading) {
             return null;
           }
-
           if (!unsubscribe) {
             unsubscribe = subscribeToMore({
               document: CHAT_ROOM_SUBSCRIPTION,
@@ -59,20 +58,15 @@ const ChatListTemplate: React.FC = () => {
               }
             });
           }
-
           return (
             <>
-              <ul className={styles['chat-rooms']}>
+              <div className={styles.chatRooms}>
                 {
-                  data.chatRooms.map((chatRoom: any, index: number) => {
-                    return (
-                      <Link to={`/chatrooms/${chatRoom.id}`} key={index}>
-                        <li className={styles['chat-rooms__room']}>{chatRoom.id}: {chatRoom.title}</li>
-                      </Link>
-                    )
-                  })
+                  data.chatRooms.map((chatRoom: any) => (
+                    <ChatRoom key={chatRoom.id} chatRoom={chatRoom} />
+                  ))
                 }
-              </ul>
+              </div>
               <NewChat />
             </>
           )
@@ -82,4 +76,4 @@ const ChatListTemplate: React.FC = () => {
   );
 };
 
-export default ChatListTemplate;
+export default ChatRoomList;

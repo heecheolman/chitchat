@@ -5,6 +5,7 @@ import { Query } from 'react-apollo';
 import { IMessage } from '../interfaces';
 import Message from '../components/Message';
 import Input from '../components/Input';
+import ChatHeader from '../components/ChatHeader';
 
 const MESSAGE_QUERY = gql`
   query messages($chatRoomId: Int!){

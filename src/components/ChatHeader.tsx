@@ -12,7 +12,7 @@ const ChatHeader: React.FC = () => {
           <button className={styles.prevButtonWrap}><FiChevronLeft className={styles.prevButtonIcon} />이전</button>
         </div>
         <div className={styles.userNameWrap}>
-          <span className={styles.userName}>{userName || 'heecheolman'}</span>
+          <span className={styles.userName}>{userName}</span>
         </div>
         <div className={styles.buttonBox} />
       </div>
