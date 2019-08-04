@@ -21,10 +21,21 @@
     .chatRoomTitle {
       font-size: 20px;
       color: $text-normal;
+      margin-bottom: 5px;
+      white-space: nowrap;
+      word-break: break-all;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .chatRoomDescription {
       font-size: 16px;
       color: $text-weak;
+      white-space: nowrap;
+      word-break: break-all;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 }

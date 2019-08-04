@@ -1,17 +1,13 @@
-@import './../scss/var';
+@import './../scss/var'; @import './../scss/mixin';
 
 .chatHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  height: 50px;
   background-color: #fff;
-  margin: -$app-padding;
-  padding: $app-padding;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-  //box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px;
+  margin: -40px 10px 20px;
+  padding: 30px 10px;
+  @include shadow-box;
 
   .buttonBox {
     min-width: 50px;
@@ -27,7 +23,7 @@
       padding: 0;
       font-size: 16px;
       background-color: transparent;
-      color: $text-normal;
+      color: $app-normal;
 
       .prevButtonIcon {
         font-size: 20px;

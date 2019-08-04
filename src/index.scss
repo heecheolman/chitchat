@@ -1,4 +1,5 @@
 @import './scss/var';
+@import './scss/mixin';
 
 * {
   box-sizing: border-box;
@@ -15,16 +16,22 @@ html, body {
   height: 100vh;
   align-items: center;
   justify-content: center;
+  //background: linear-gradient(100deg, #b2dcfa, #6ac1ff);
+  background: rgba(56, 115, 255, 0.18);
 
   .main-frame {
     width: 100%;
-    padding: $app-padding;
+    padding: $app-padding 2*$app-padding;
     max-width: 400px;
     min-height: 80%;
     //max-height: 50%;
     //border: 1px solid #e3e3e3;
-    border-radius: 8px;
-    box-shadow: rgba(0, 0, 0, 0.3) 0 1px 10px;
+    //border-radius: 8px;
+    //box-shadow: 0 4px 30px rgba(99, 200, 250, 0.5);
+    //box-shadow: rgba(0, 0, 0, 0.1) 0 1px 12px;
+    @include shadow-box;
+
+    background: #F8F8FD;
   }
 
 }
