@@ -11,7 +11,7 @@ const ChatRoom: React.FC<{ chatRoom: any }> = ({ chatRoom }) => {
           {chatRoom.title}
         </div>
         <div className={styles.chatRoomDescription}>
-          설명설명설명설명설명설명설명설명설명설명설명설명설명설명
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
         </div>
       </Link>
     </div>

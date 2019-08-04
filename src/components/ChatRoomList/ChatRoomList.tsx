@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-
+import { FiX } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
 import NewChat from '../NewChat';
@@ -33,6 +33,8 @@ const CHAT_ROOM_SUBSCRIPTION = gql`
 let unsubscribe: any = null;
 
 const ChatRoomList: React.FC = () => {
+  const [backdrop, setBackdrop] = useState(false);
+
   return (
     <>
       <Query query={CHAT_ROOMS_QUERY}>
@@ -60,6 +62,13 @@ const ChatRoomList: React.FC = () => {
           }
           return (
             <>
+              <div className={backdrop ? styles.backdrop : styles.displayNone}>
+                <div className={styles.backdropNewChatWrap}>
+                  <div className={styles.newChatHeader}>
+                    <button className={styles.close} onClick={() => setBackdrop(false)}><FiX /></button>
+                  </div>
+                </div>
+              </div>
               <div className={styles.chatRooms}>
                 {
                   data.chatRooms.map((chatRoom: any) => (
@@ -67,7 +76,7 @@ const ChatRoomList: React.FC = () => {
                   ))
                 }
               </div>
-              <NewChat />
+              <NewChat backdrop={setBackdrop} />
             </>
           )
         }}

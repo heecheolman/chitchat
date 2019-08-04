@@ -11,7 +11,7 @@ const App: React.FC = (props) => (
   <div className="App">
     <div className="main-frame">
       <ChatHeader />
-      <main>{props.children}</main>
+      <main className="main-wrap">{props.children}</main>
     </div>
   </div>
 );

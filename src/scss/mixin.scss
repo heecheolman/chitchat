@@ -1,3 +1,19 @@
+@import './var';
+
 @mixin shadow-box {
   box-shadow: rgba(0, 0, 0, 0.1) 0 1px 12px;
+}
+
+@mixin simple-button {
+  border: none;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  color: $app-normal;
+  transition: .1s ease-out;
+  padding: 10px;
+
+  &:hover {
+    color: $primary;
+  }
 }

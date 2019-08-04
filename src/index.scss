@@ -17,7 +17,8 @@ html, body {
   align-items: center;
   justify-content: center;
   //background: linear-gradient(100deg, #b2dcfa, #6ac1ff);
-  background: rgba(56, 115, 255, 0.18);
+  //background: rgba(56, 115, 255, 0.18);
+  background: rgba(83, 107, 163, 0.18);
 
   .main-frame {
     width: 100%;
@@ -32,6 +33,13 @@ html, body {
     @include shadow-box;
 
     background: #F8F8FD;
+
+    .main-wrap {
+      width: 100%;
+      height: 100%;
+      display: block;
+      position: relative;
+    }
   }
 
 }

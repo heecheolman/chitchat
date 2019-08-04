@@ -25,7 +25,7 @@ const CREATE_CHAT_ROOM = gql`
   }
 `;
 
-const NewChat: React.FC = () => {
+const NewChat: React.FC<{ backdrop: any }> = ({ backdrop }) => {
   console.log('NewChat Rendered!');
   const userId = +Store.instance.id;
   const mutation = useMutation(CREATE_CHAT_ROOM, {
@@ -41,7 +41,8 @@ const NewChat: React.FC = () => {
   return (
     <>
       <button onClick={() => {
-        mutation();
+        // mutation();
+        backdrop(true);
       }}>새로운채팅 만들기</button>
     </>
   );
