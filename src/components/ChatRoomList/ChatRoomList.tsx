@@ -72,7 +72,6 @@ const ChatRoomList: React.FC = () => {
       description: roomDesc,
     },
     update: (proxy, { data }) => {
-      console.log('create chatRoom data', data);
     }
   });
 

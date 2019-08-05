@@ -28,7 +28,6 @@ const CREATE_CHAT_ROOM = gql`
 `;
 
 const NewChat: React.FC<{ backdrop: any }> = ({ backdrop }) => {
-  console.log('NewChat Rendered!');
   const userId = +Store.instance.id;
   const mutation = useMutation(CREATE_CHAT_ROOM, {
     variables: {
@@ -36,7 +35,6 @@ const NewChat: React.FC<{ backdrop: any }> = ({ backdrop }) => {
       title: '1번채팅방'
     },
     update: (proxy, { data }) => {
-      console.log('create chatRoom data', data);
     }
   });
 

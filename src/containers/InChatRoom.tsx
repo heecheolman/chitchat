@@ -86,17 +86,15 @@ const InChatRoom: React.FC<{ match: any; }> = ({
             return (
               <>
                 <ChatHeader prevMeta={{ canPrev: true, url: '/chatrooms' }} title={'채팅'} />
-                <h3>ChatRoomTemplate :{ chatRoomId }</h3>
-                <h4>메세지들</h4>
                 <div>
                   {
                     data.messages.map((message: IMessage) =>
                       <Message key={message.id} message={message} />
                     )
                   }
+                  <Input chatRoomId={chatRoomId}
+                         userId={userId} />
                 </div>
-                <Input chatRoomId={chatRoomId}
-                       userId={userId} />
               </>
             )
           }
