@@ -1,0 +1,12 @@
+.messageContainer {
+  position: relative;
+  width: 100%;
+  min-height: 300px;
+  background: #fff;
+
+  .inputWrap {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+}

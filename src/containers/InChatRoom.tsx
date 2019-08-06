@@ -6,6 +6,7 @@ import { IMessage } from '../interfaces';
 import Message from '../components/Message';
 import Input from '../components/Input';
 import ChatHeader from '../components/ChatHeader';
+import styles from './InChatRoom.module.scss';
 
 const MESSAGE_QUERY = gql`
   query messages($chatRoomId: Int!){
@@ -86,14 +87,18 @@ const InChatRoom: React.FC<{ match: any; }> = ({
             return (
               <>
                 <ChatHeader prevMeta={{ canPrev: true, url: '/chatrooms' }} title={'채팅'} />
+                <div className={styles.messageContainer}>
+                  <div className={styles.inputWrap}>
+                    <Input chatRoomId={chatRoomId}
+                           userId={userId} />
+                  </div>
+                </div>
                 <div>
                   {
                     data.messages.map((message: IMessage) =>
                       <Message key={message.id} message={message} />
                     )
                   }
-                  <Input chatRoomId={chatRoomId}
-                         userId={userId} />
                 </div>
               </>
             )
