@@ -1,12 +1,20 @@
+@import './../scss/mixin';
+
 .messageContainer {
   position: relative;
   width: 100%;
   min-height: 300px;
+  padding: 0 10px;
   background: #fff;
+  @include shadow-box;
 
   .inputWrap {
     position: absolute;
+    display: flex;
     bottom: 0;
+    left: 0;
     width: 100%;
+    min-height: 50px;
+    height: 50px;
   }
 }

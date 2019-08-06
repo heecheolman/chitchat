@@ -88,17 +88,17 @@ const InChatRoom: React.FC<{ match: any; }> = ({
               <>
                 <ChatHeader prevMeta={{ canPrev: true, url: '/chatrooms' }} title={'채팅'} />
                 <div className={styles.messageContainer}>
+                  <div>
+                    {
+                      data.messages.map((message: IMessage) =>
+                        <Message key={message.id} message={message} />
+                      )
+                    }
+                  </div>
                   <div className={styles.inputWrap}>
                     <Input chatRoomId={chatRoomId}
                            userId={userId} />
                   </div>
-                </div>
-                <div>
-                  {
-                    data.messages.map((message: IMessage) =>
-                      <Message key={message.id} message={message} />
-                    )
-                  }
                 </div>
               </>
             )
