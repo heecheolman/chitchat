@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
 import Root from './Root';
+import 'moment/locale/ko';
 
 ReactDOM.render(<Root />, document.getElementById('root'));
 
