@@ -20,8 +20,8 @@ const Message: React.FC<{ message: IMessage }> = ({ message }) =>
       <span className={styles.userName}>{message.createdBy.userName}</span>
       <div className={styles.messageContentBox}>
         <span className={styles.message}>{message.content}</span>
-        <span className={styles.timestamp}>{moment(parseInt(message.createdAt)).format('a hh:mm:ss')}</span>
       </div>
+      <span className={styles.timestamp}>{moment(parseInt(message.createdAt)).format('a hh:mm:ss')}</span>
     </div>
   </>;
 
