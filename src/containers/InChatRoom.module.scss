@@ -2,11 +2,10 @@
 
 .messageContainer {
   $input-height: 50px;
-
   position: relative;
   width: 100%;
   min-height: 300px;
-  padding: 10px 10px $input-height;
+  padding: 20px 20px $input-height;
   background: #fff;
   @include shadow-box;
 
