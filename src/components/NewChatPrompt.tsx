@@ -36,6 +36,12 @@ export class NewChatPrompt extends React.Component<{ backdrop: boolean; setBackd
     this.props.setBackdrop(false);
   }
 
+  closePrompt(): void {
+    this.setTitle('');
+    this.setDescription('');
+    this.props.setBackdrop(false);
+  }
+
   get buttonDisabled() {
     return !this.state.title.length || !this.state.description.length;
   }
@@ -45,7 +51,7 @@ export class NewChatPrompt extends React.Component<{ backdrop: boolean; setBackd
       <div className={this.props.backdrop ? styles.backdrop : styles.displayNone}>
         <div className={styles.backdropNewChatWrap}>
           <div className={styles.newChatHeader}>
-            <button className={styles.close} onClick={() => this.props.setBackdrop(false)}><FiX /></button>
+            <button className={styles.close} onClick={() => this.closePrompt()}><FiX /></button>
           </div>
           <div className={styles.newChatBody}>
             <div className="simple-input-wrap">
