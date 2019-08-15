@@ -76,6 +76,7 @@ const ChatRoomList: React.FC = () => {
   });
 
   const newChat = () => {
+    console.log('newChat Called');
     newChatMutation();
     setRoomTitle('');
     setRoomDesc('');
@@ -84,7 +85,9 @@ const ChatRoomList: React.FC = () => {
 
   return (
     <>
-      <Query query={CHAT_ROOMS_QUERY}>
+      <Query query={CHAT_ROOMS_QUERY}
+             fetchPolicy={'network-only'}
+      >
         {({ loading, data, subscribeToMore }: any) => {
           if (loading) {
             return null;
@@ -119,11 +122,13 @@ const ChatRoomList: React.FC = () => {
                     <div className="simple-input-wrap">
                       <span className="simple-input-label">제목</span>
                       <input className="simple-input" type="text" maxLength={20} placeholder="20자 이내로 작성해주세요."
+                             value={roomTitle}
                              onChange={(e) => setRoomTitle(e.target.value)} />
                     </div>
                     <div className="simple-input-wrap">
                       <span className="simple-input-label">설명</span>
-                      <input className="simple-input" type="text" maxLength={30} placeholder="30자 이내로 작성해주세."
+                      <input className="simple-input" type="text" maxLength={30} placeholder="30자 이내로 작성해주세요."
+                             value={roomDesc}
                              onChange={(e) => setRoomDesc(e.target.value)}/>
                     </div>
                     <div className={styles.newChatActionButtonWrap}>
