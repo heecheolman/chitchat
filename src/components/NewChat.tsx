@@ -1,53 +1,12 @@
 import React from 'react';
-import gql from 'graphql-tag';
-import { useMutation } from 'react-apollo-hooks';
-import { Store } from '../store';
 import styles from './NewChat.module.scss';
-import { FiPlus } from 'react-icons/fi';
 
-const CREATE_CHAT_ROOM = gql`
-  mutation createChatRoom ($userId: Int!, $title: String!) {
-    createChatRoom(userId: $userId, title: $title) {
-      id
-      title
-      users {
-        id
-        userName
-      }
-      messages {
-        id
-        content
-        createdBy {
-          id
-          userName
-        }
-        createdAt
-      }
-    }
-  }
-`;
-
-const NewChat: React.FC<{ backdrop: any }> = ({ backdrop }) => {
-  const userId = +Store.instance.id;
-  const mutation = useMutation(CREATE_CHAT_ROOM, {
-    variables: {
-      userId,
-      title: '1번채팅방'
-    },
-    update: (proxy, { data }) => {
-    }
-  });
-
-  return (
-    <div className={styles.newChatWrap}>
-      <button className={`simple-button ${styles.newChatButton}`} onClick={() => {
-        // mutation();
-        backdrop(true);
-      }}>새로운채팅
-        {/*<FiPlus/>*/}
-      </button>
-    </div>
-  );
-}
+const NewChat: React.FC<{ backdrop: any }> = ({ backdrop }) =>
+  <div className={styles.newChatWrap}>
+    <button className={`simple-button ${styles.newChatButton}`}
+            onClick={() => {
+              backdrop(true);
+            }}>새로운채팅</button>
+  </div>;
 
 export default NewChat;

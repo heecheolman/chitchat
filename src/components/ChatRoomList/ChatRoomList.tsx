@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import { FiX } from 'react-icons/fi';
@@ -57,7 +57,7 @@ const CREATE_CHAT_ROOM = gql`
     }
 `;
 
-let unsubscribe: any = null;
+let subscription: any = null;
 
 const ChatRoomList: React.FC = () => {
   const [backdrop, setBackdrop] = useState(false);
@@ -71,14 +71,17 @@ const ChatRoomList: React.FC = () => {
       title: roomTitle,
       description: roomDesc,
     },
-    update: (proxy, { data }) => {
+  });
+
+  useEffect(() => {
+    return () => {
+      subscription = null;
     }
   });
 
   const createButtonDisabled = !roomTitle.length || !roomDesc.length;
 
   const newChat = () => {
-    console.log('newChat Called');
     newChatMutation();
     setRoomTitle('');
     setRoomDesc('');
@@ -94,8 +97,8 @@ const ChatRoomList: React.FC = () => {
           if (loading) {
             return null;
           }
-          if (!unsubscribe) {
-            unsubscribe = subscribeToMore({
+          if (!subscription) {
+            subscription = subscribeToMore({
               document: CHAT_ROOM_SUBSCRIPTION,
               updateQuery: (prev: any, { subscriptionData }: any) => {
                 if (!subscriptionData.data) {
@@ -124,13 +127,11 @@ const ChatRoomList: React.FC = () => {
                     <div className="simple-input-wrap">
                       <span className="simple-input-label">제목</span>
                       <input className="simple-input" type="text" maxLength={20} placeholder="20자 이내로 작성해주세요."
-                             value={roomTitle}
                              onChange={(e) => setRoomTitle(e.target.value)} />
                     </div>
                     <div className="simple-input-wrap">
                       <span className="simple-input-label">설명</span>
                       <input className="simple-input" type="text" maxLength={30} placeholder="30자 이내로 작성해주세요."
-                             value={roomDesc}
                              onChange={(e) => setRoomDesc(e.target.value)}/>
                     </div>
                     <div className={styles.newChatActionButtonWrap}>
