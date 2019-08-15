@@ -2,31 +2,9 @@ import React from 'react';
 import styles from './NewChatPrompt.module.scss';
 import { FiX } from 'react-icons/fi';
 import { Mutation } from 'react-apollo';
-import gql from 'graphql-tag';
 import { Store } from '../store';
+import { CREATE_CHAT_ROOM_MUTATION } from '../graphql-schema';
 
-const CREATE_CHAT_ROOM = gql`
-    mutation createChatRoom ($userId: Int!, $title: String!, $description: String!) {
-        createChatRoom(userId: $userId, title: $title, description: $description) {
-            id
-            title
-            description
-            users {
-                id
-                userName
-            }
-            messages {
-                id
-                content
-                createdBy {
-                    id
-                    userName
-                }
-                createdAt
-            }
-        }
-    }
-`;
 
 export class NewChatPrompt extends React.Component<{ backdrop: boolean; setBackdrop: Function; }, any> {
 
@@ -83,7 +61,7 @@ export class NewChatPrompt extends React.Component<{ backdrop: boolean; setBackd
                      onChange={(e) => this.setDescription(e.target.value)}/>
             </div>
             <div className={styles.newChatActionButtonWrap}>
-              <Mutation mutation={CREATE_CHAT_ROOM} variables={{
+              <Mutation mutation={CREATE_CHAT_ROOM_MUTATION} variables={{
                 userId: this.state.userId,
                 title: this.state.title,
                 description: this.state.description,

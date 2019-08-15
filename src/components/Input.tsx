@@ -1,22 +1,9 @@
 import React from 'react';
 import { Mutation } from 'react-apollo';
-import gql from 'graphql-tag';
 import styles from './Input.module.scss';
 import { FiArrowUp } from 'react-icons/fi';
+import { CREATE_MESSAGE_MUTATION } from '../graphql-schema';
 
-const MESSAGE_MUTATION = gql`
-  mutation createMessage($chatRoomId: Int!, $userId: Int!, $content: String!) {
-    createMessage(chatRoomId: $chatRoomId, userId: $userId, content: $content) {
-      id
-      content
-      createdBy {
-        id
-        userName
-      }
-      createdAt
-    }
-  }
-`;
 
 class Input extends React.Component<any, { chatRoomId: number; userId: number; content: string }> {
   constructor(props: any) {
@@ -30,7 +17,7 @@ class Input extends React.Component<any, { chatRoomId: number; userId: number; c
 
   render() {
     return (
-      <Mutation mutation={MESSAGE_MUTATION}
+      <Mutation mutation={CREATE_MESSAGE_MUTATION}
                 variables={{
                   chatRoomId: this.state.chatRoomId,
                   userId: this.state.userId,

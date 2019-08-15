@@ -1,36 +1,11 @@
 import React from 'react';
 import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
 import styles from './ChatRoomList.module.scss';
 import ChatRoom from './ChatRoom';
 import { Store } from '../../store';
 import ChatHeader from '../ChatHeader';
 import { NewChatPrompt } from '../NewChatPrompt';
-
-const CHAT_ROOMS_QUERY = gql`
-  query {
-    chatRooms {
-      id
-      title
-      description
-    }
-  }
-`;
-
-const CHAT_ROOM_SUBSCRIPTION = gql`
-  subscription {
-    chatRoomCreated {
-      id
-      title
-      description
-      users {
-        id
-        userName
-      }
-    }
-  }
-`;
-
+import { CHAT_ROOM_SUBSCRIPTION, CHAT_ROOMS_QUERY } from '../../graphql-schema';
 
 let subscription: any = null;
 

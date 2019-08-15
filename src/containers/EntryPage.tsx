@@ -1,24 +1,15 @@
 import React, { useState } from 'react';
 import { Store } from '../store';
 import styles from './EntryPage.module.scss';
-import gql from 'graphql-tag';
 import { useMutation } from 'react-apollo-hooks';
 import { Link } from 'react-router-dom';
+import { CREATE_USER_MUTATION } from '../graphql-schema';
 
 
-/** createUser Mutation */
-const CREATE_USER = gql`  
-  mutation createUser($userName: String!) {
-    createUser(userName: $userName) {
-      id
-      userName
-    }
-  }
-`;
 
 const EntryPage: React.FC = () => {
   const [userName, setUserName] = useState('');
-  const mutation = useMutation(CREATE_USER, {
+  const mutation = useMutation(CREATE_USER_MUTATION, {
     variables: {
       userName
     },
