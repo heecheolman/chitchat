@@ -1,5 +1,8 @@
 import gql from 'graphql-tag';
 
+/**
+ * 유저 생성
+ */
 const CREATE_USER_MUTATION = gql`
     mutation createUser($userName: String!) {
         createUser(userName: $userName) {
@@ -9,6 +12,9 @@ const CREATE_USER_MUTATION = gql`
     }
 `;
 
+/**
+ * 채팅룸 생성
+ */
 const CREATE_CHAT_ROOM_MUTATION = gql`
     mutation createChatRoom ($userId: Int!, $title: String!, $description: String!) {
         createChatRoom(userId: $userId, title: $title, description: $description) {
@@ -32,6 +38,9 @@ const CREATE_CHAT_ROOM_MUTATION = gql`
     }
 `;
 
+/**
+ * 메세지 생성
+ */
 const CREATE_MESSAGE_MUTATION = gql`
     mutation createMessage($chatRoomId: Int!, $userId: Int!, $content: String!) {
         createMessage(chatRoomId: $chatRoomId, userId: $userId, content: $content) {

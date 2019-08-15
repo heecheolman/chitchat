@@ -1,4 +1,8 @@
 import gql from 'graphql-tag';
+
+/**
+ * 채팅룸 리스트 가져오기
+ */
 const CHAT_ROOMS_QUERY = gql`    
     query {
         chatRooms {
@@ -8,6 +12,10 @@ const CHAT_ROOMS_QUERY = gql`
         }
     }
 `;
+
+/**
+ * 메세지 리스트 가져오기
+ */
 const MESSAGE_QUERY = gql`
     query messages($chatRoomId: Int!){
         messages(chatRoomId: $chatRoomId) {
