@@ -1,7 +1,7 @@
 @import './../scss/mixin';
 
 .messageContainer {
-  $input-height: 50px;
+  $input-height: 60px;
   position: relative;
   width: 100%;
   min-height: 300px;
@@ -21,7 +21,7 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    min-height: 50px;
+    min-height: $input-height;
     height: $input-height;
   }
 }

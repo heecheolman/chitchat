@@ -1,11 +1,9 @@
-@import './../../scss/mixin';
-@import './../../scss/var';
+@import './../scss/mixin';
+@import './../scss/var';
 
 .backdrop {
   position: absolute;
-  //background: rgba(0, 0, 0, 0.1);
   width: 100%;
-  //height: 100%;
   height: calc(100% - 90px);
   overflow: hidden;
 
@@ -21,15 +19,28 @@
     animation: slide-up ease-out 0.1s;
 
     .newChatHeader {
+      padding: 0 10px;
       display: flex;
       justify-content: flex-end;
-      padding: 0 10px;
 
       .close {
         @include simple-button;
         font-size: 20px;
       }
     }
+    .newChatBody {
+      padding: 20px;
+
+      .newChatActionButtonWrap {
+        display: flex;
+        justify-content: flex-end;
+
+        .newChatActionButton {
+          font-size: 20px;
+        }
+      }
+    }
+
   }
 
   @keyframes slide-up {
@@ -47,21 +58,4 @@
 .displayNone {
   display: none;
   visibility: hidden;
-}
-
-.chatRooms {
-  padding: 10px 0;
-  list-style: none;
-  min-height: 60vh;
-  max-height: 60vh;
-  overflow: scroll;
-}
-.newChatWrap {
-  display: flex;
-  width: 100%;
-  justify-content: flex-end;
-
-  .newChatButton {
-    font-size: 16px;
-  }
 }
