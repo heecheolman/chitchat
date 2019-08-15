@@ -75,6 +75,8 @@ const ChatRoomList: React.FC = () => {
     }
   });
 
+  const createButtonDisabled = !roomTitle.length || !roomDesc.length;
+
   const newChat = () => {
     console.log('newChat Called');
     newChatMutation();
@@ -132,8 +134,8 @@ const ChatRoomList: React.FC = () => {
                              onChange={(e) => setRoomDesc(e.target.value)}/>
                     </div>
                     <div className={styles.newChatActionButtonWrap}>
-                      <button disabled={!roomTitle.length || !roomDesc.length}
-                              className={`simple-button ${styles.newChatActionButton}`}
+                      <button disabled={createButtonDisabled}
+                              className={`simple-button ${styles.newChatActionButton} ${createButtonDisabled ? 'simple-button--disabled' : ''}`}
                               onClick={() => newChat()}
                       >생성</button>
                     </div>

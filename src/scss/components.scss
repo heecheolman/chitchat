@@ -5,6 +5,16 @@
   @include simple-button;
 }
 
+.simple-button--disabled {
+  cursor: not-allowed;
+  color: $app-weak-1;
+  text-decoration: line-through;
+
+  &:hover {
+    color: $app-weak-1;
+  }
+}
+
 .simple-input-wrap {
   display: flex;
   flex-direction: column;
