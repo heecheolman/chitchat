@@ -18,11 +18,11 @@ class ChatRoomList extends React.Component<any, { userId: number; backdrop: bool
     };
   }
 
-  setBackdrop(hasBackdrop: boolean): void {
+  setBackdrop = (hasBackdrop: boolean): void => {
     this.setState({
-      backdrop: hasBackdrop
-    })
-  }
+      backdrop: hasBackdrop,
+    });
+  };
 
   componentWillUnmount(): void {
     subscription = null;
@@ -59,7 +59,7 @@ class ChatRoomList extends React.Component<any, { userId: number; backdrop: bool
             return (
               <>
                 <ChatHeader prevMeta={{ canPrev: true, url: '/' }} title={'채팅목록'} />
-                <NewChatPrompt backdrop={this.state.backdrop} setBackdrop={this.setBackdrop.bind(this)} />
+                <NewChatPrompt backdrop={this.state.backdrop} setBackdrop={this.setBackdrop} />
                 <div className={styles.chatRooms}>
                   {
                     data.chatRooms.map((chatRoom: any) => (
