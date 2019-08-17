@@ -6,7 +6,7 @@ import client from './apolloClient';
 import { ApolloProvider } from 'react-apollo';
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
 import App from './App';
-import InChatRoom from './containers/InChatRoom';
+import InChatRoomPage from './containers/InChatRoomPage';
 import ChatRoomPage from './containers/ChatRoomPage';
 import PrivateRoute from './containers/PirvateRoute';
 
@@ -18,7 +18,7 @@ const Root = () => (
           <Switch>
             <Route exact path="/" component={EntryPage} />
             <PrivateRoute exact component={ChatRoomPage} path='/chatrooms' />
-            <PrivateRoute exact component={InChatRoom} path='/chatrooms/:id' />
+            <PrivateRoute exact component={InChatRoomPage} path='/chatrooms/:id' />
           </Switch>
         </BrowserRouter>
       </App>

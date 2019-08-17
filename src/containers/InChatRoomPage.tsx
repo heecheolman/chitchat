@@ -5,12 +5,12 @@ import { IMessage } from '../interfaces';
 import Message from '../components/Message';
 import Input from '../components/Input';
 import ChatHeader from '../components/ChatHeader';
-import styles from './InChatRoom.module.scss';
+import styles from './InChatRoomPage.module.scss';
 import { MESSAGE_QUERY, MESSAGE_SUBSCRIPTION } from '../graphql-schema';
 
 let subscription: any = null;
 
-const InChatRoom: React.FC<{ match: any; }> = ({
+const InChatRoomPage: React.FC<{ match: any; }> = ({
   match
 }) => {
   const chatRoomId = +match.params.id;
@@ -81,4 +81,4 @@ const InChatRoom: React.FC<{ match: any; }> = ({
   );
 };
 
-export default InChatRoom;
+export default InChatRoomPage;
