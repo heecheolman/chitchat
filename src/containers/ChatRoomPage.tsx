@@ -1,15 +1,15 @@
 import React from 'react';
 import { Query } from 'react-apollo';
-import styles from './ChatRoomList.module.scss';
-import ChatRoom from './ChatRoom';
-import { Store } from '../../store';
-import ChatHeader from '../ChatHeader';
-import { NewChatPrompt } from '../NewChatPrompt';
-import { CHAT_ROOM_SUBSCRIPTION, CHAT_ROOMS_QUERY } from '../../graphql-schema';
+import styles from './ChatRoomPage.module.scss';
+import ChatRoom from './../components/ChatRoom';
+import { Store } from '../store';
+import ChatHeader from '../components/ChatHeader';
+import { NewChatPrompt } from '../components/NewChatPrompt';
+import { CHAT_ROOM_SUBSCRIPTION, CHAT_ROOMS_QUERY } from '../graphql-schema';
 
 let subscription: any = null;
 
-class ChatRoomList extends React.Component<any, { userId: number; backdrop: boolean; }> {
+class ChatRoomPage extends React.Component<any, { userId: number; backdrop: boolean; }> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -78,6 +78,6 @@ class ChatRoomList extends React.Component<any, { userId: number; backdrop: bool
       </>
     );
   };
-};
+}
 
-export default ChatRoomList;
+export default ChatRoomPage;

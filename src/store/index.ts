@@ -25,6 +25,10 @@ export class Store {
     };
   }
 
+  static get loggedIn() {
+    return +Store.instance.id !== 0 && Store.instance.id !== void 0 && Store.instance.id !== null;
+  }
+
   static setState(state: any) {
     if (!Store._instance) {
       throw Error('Store must be init!');
@@ -32,6 +36,6 @@ export class Store {
     Store._instance = {
       ...Store._instance,
       ...state
-    }
+    };
   }
 }
