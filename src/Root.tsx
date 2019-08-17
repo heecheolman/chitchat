@@ -17,8 +17,8 @@ const Root = () => (
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={EntryPage} />
-            <PrivateRoute component={ChatRoomPage} path='/chatrooms' />
-            <PrivateRoute component={InChatRoom} path='/chatrooms/:id' />
+            <PrivateRoute exact component={ChatRoomPage} path='/chatrooms' />
+            <PrivateRoute exact component={InChatRoom} path='/chatrooms/:id' />
           </Switch>
         </BrowserRouter>
       </App>
