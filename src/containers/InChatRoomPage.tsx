@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Store } from '../store';
 import { Query } from 'react-apollo';
 import { IMessage } from '../interfaces';
@@ -8,37 +8,44 @@ import ChatHeader from '../components/ChatHeader';
 import styles from './InChatRoomPage.module.scss';
 import { MESSAGE_QUERY, MESSAGE_SUBSCRIPTION } from '../graphql-schema';
 
-let subscription: any = null;
+interface IState {
+  chatRoomId: number;
+  userId: number;
+}
 
-const InChatRoomPage: React.FC<{ match: any; }> = ({
-  match
-}) => {
-  const chatRoomId = +match.params.id;
-  const userId = +Store.instance.id;
+class InChatRoomPage extends React.Component<any, IState> {
+  private subscription: any = null;
 
-  useEffect(() => {
-    return () => {
-      subscription = null;
-    }
-  });
+  constructor(props: any) {
+    super(props);
+    const { match } = props;
+    this.state = {
+      chatRoomId: +match.params.id,
+      userId: +Store.instance.id,
+    };
+  }
 
-  return (
-    <>
-      <Query query={MESSAGE_QUERY}
-             variables={{ chatRoomId: +chatRoomId }}
-             fetchPolicy={'network-only'}
+  componentWillUnmount(): void {
+    this.subscription = null;
+  }
+
+  render() {
+    return (
+      <Query
+        query={MESSAGE_QUERY}
+        variables={{ chatRoomId: this.state.chatRoomId }}
+        fetchPolicy={'network-only'}
       >
         {
           ({ loading, data, subscribeToMore }: any) => {
             if (loading) {
               return null;
             }
-
-            if (!subscription) {
-              subscription = subscribeToMore({
+            if (!this.subscription) {
+              this.subscription = subscribeToMore({
                 document: MESSAGE_SUBSCRIPTION,
                 variables: {
-                  chatRoomId: +chatRoomId
+                  chatRoomId: this.state.chatRoomId,
                 },
                 updateQuery(prev: any, { subscriptionData }: any) {
                   if (!subscriptionData.data) {
@@ -49,13 +56,12 @@ const InChatRoomPage: React.FC<{ match: any; }> = ({
                     ...prev,
                     messages: [
                       ...prev.messages,
-                      createdMessage
+                      createdMessage,
                     ]
                   };
-                },
+                }
               })
             }
-
             return (
               <>
                 <ChatHeader prevMeta={{ canPrev: true, url: '/chatrooms' }} title={'채팅'} />
@@ -68,8 +74,8 @@ const InChatRoomPage: React.FC<{ match: any; }> = ({
                     }
                   </div>
                   <div className={styles.inputWrap}>
-                    <Input chatRoomId={chatRoomId}
-                           userId={userId} />
+                    <Input chatRoomId={this.state.chatRoomId}
+                           userId={this.state.userId} />
                   </div>
                 </div>
               </>
@@ -77,8 +83,8 @@ const InChatRoomPage: React.FC<{ match: any; }> = ({
           }
         }
       </Query>
-    </>
-  );
-};
+    );
+  }
+}
 
 export default InChatRoomPage;
