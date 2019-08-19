@@ -1,12 +1,11 @@
 import React from 'react';
 import { Store } from '../store';
 import { Query } from 'react-apollo';
-import { IMessage } from '../interfaces';
-import Message from '../components/Message';
 import Input from '../components/Input';
 import ChatHeader from '../components/ChatHeader';
 import styles from './InChatRoomPage.module.scss';
 import { MESSAGE_QUERY, MESSAGE_SUBSCRIPTION } from '../graphql-schema';
+import MessageBox from '../components/MessageBox';
 
 interface IState {
   chatRoomId: number;
@@ -59,24 +58,21 @@ class InChatRoomPage extends React.Component<any, IState> {
                       createdMessage,
                     ]
                   };
-                }
-              })
+                },
+              });
             }
             return (
               <>
-                <ChatHeader prevMeta={{ canPrev: true, url: '/chatrooms' }} title={'채팅'} />
+                <ChatHeader
+                  prevMeta={{ canPrev: true, url: '/chatrooms' }}
+                  title={'채팅'}
+                />
                 <div className={styles.messageContainer}>
-                  <div className={styles.messageBoxWrap}>
-                    {
-                      data.messages.map((message: IMessage) =>
-                        <Message key={message.id} message={message} />
-                      )
-                    }
-                  </div>
-                  <div className={styles.inputWrap}>
-                    <Input chatRoomId={this.state.chatRoomId}
-                           userId={this.state.userId} />
-                  </div>
+                  <MessageBox messages={data.messages} />
+                  <Input
+                    chatRoomId={this.state.chatRoomId}
+                    userId={this.state.userId}
+                  />
                 </div>
               </>
             )

@@ -24,7 +24,7 @@ class Input extends React.Component<any, { chatRoomId: number; userId: number; c
                   content: this.state.content
                 }}>
         {
-          (mutation: Function, { loading }: any) => {
+          (mutation: Function) => {
             const onChange = (event: any) => {
               this.setState({
                 content: event.target.value
@@ -35,6 +35,7 @@ class Input extends React.Component<any, { chatRoomId: number; userId: number; c
               this.setState({
                 content: ''
               });
+              // this.props.scrollToBottom();
             };
             const onKeyPress = (event: any) => {
               if (event.key === 'Enter') {
@@ -42,11 +43,12 @@ class Input extends React.Component<any, { chatRoomId: number; userId: number; c
                 this.setState({
                   content: ''
                 });
+                // this.props.scrollToBottom();
               }
             };
 
             return (
-              <>
+              <div className={styles.inputWrap}>
                 <div className={styles.messageInputWrap}>
                   <input className={styles.messageInput}
                          type="text"
@@ -59,7 +61,7 @@ class Input extends React.Component<any, { chatRoomId: number; userId: number; c
                 <div className={styles.messageButtonWrap}>
                   <button className={styles.messageButton} onClick={onClick}><FiArrowUp className={styles.messageSendIcon} /></button>
                 </div>
-              </>
+              </div>
             )
           }
         }

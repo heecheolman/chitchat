@@ -1,69 +1,80 @@
 @import './../scss/var';
 @import './../scss/mixin';
 
-.messageInputWrap {
-  width: 85%;
-  height: 100%;
+
+.inputWrap {
+  position: absolute;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  //@include shadow-box;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  min-height: $input-height;
+  height: $input-height;
 
-  .messageInput {
-    width: 100%;
-    outline: none;
-    padding: 10px 15px;
-    font-size: 14px;
-    border: 1px solid $app-weak-2;
-    //@include shadow-box;
-    background: #fff;
-    border-radius: 12px;
-    color: $app-normal;
-    margin-left: 10px;
-
-    &::placeholder {
-      color: $app-weak-2;
-    }
-  }
-}
-
-.messageButtonWrap {
-  width: 15%;
-  height: 100%;
-  display: flex;
-  justify-content: flex-end;
-  margin-right: 10px;
-  align-items: center;
-  background-color: #fff;
-
-  .messageButton {
+  .messageInputWrap {
+    width: 85%;
+    height: 100%;
     display: flex;
     justify-content: center;
-    background-color: $app-weak-1;
-    margin-top: -3px;
     align-items: center;
-    outline: none;
-    padding: 0;
-    cursor: pointer;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    border: 1px solid transparent;
-    transition: .1s ease-out;
+    //@include shadow-box;
 
-    .messageSendIcon {
+    .messageInput {
+      width: 100%;
+      outline: none;
+      padding: 10px 15px;
       font-size: 14px;
-      color: #fff;
-      transition: inherit;
-    }
+      border: 1px solid $app-weak-2;
+      //@include shadow-box;
+      background: #fff;
+      border-radius: 12px;
+      color: $app-normal;
+      margin-left: 10px;
 
-    &:hover {
-      @include shadow-box;
-      transform: scale(1.01);
+      &::placeholder {
+        color: $app-weak-2;
+      }
+    }
+  }
+  .messageButtonWrap {
+    width: 15%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 10px;
+    align-items: center;
+    background-color: #fff;
+
+    .messageButton {
+      display: flex;
+      justify-content: center;
+      background-color: $app-weak-1;
+      margin-top: -3px;
+      align-items: center;
+      outline: none;
+      padding: 0;
+      cursor: pointer;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 1px solid transparent;
+      transition: .1s ease-out;
 
       .messageSendIcon {
-        transform: translateY(-2px);
+        font-size: 14px;
+        color: #fff;
+        transition: inherit;
+      }
+
+      &:hover {
+        @include shadow-box;
+        transform: scale(1.01);
+
+        .messageSendIcon {
+          transform: translateY(-2px);
+        }
       }
     }
   }
 }
+

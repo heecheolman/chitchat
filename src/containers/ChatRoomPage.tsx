@@ -52,7 +52,7 @@ class ChatRoomPage extends React.Component<any, { userId: number; backdrop: bool
                       ...prev.chatRooms,
                       chatRoomCreated
                     ]
-                  }
+                  };
                 }
               });
             }
