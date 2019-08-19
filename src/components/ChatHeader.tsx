@@ -8,12 +8,11 @@ const ChatHeader: React.FC<{ prevMeta: any, title?: string; }> = ({ prevMeta, ti
     <>
       <div className={styles.chatHeader}>
         <div className={styles.buttonBox}>
-          {
-            prevMeta.canPrev &&
-              <Link to={prevMeta.url}>
-                <button className={styles.prevButtonWrap}
-                ><FiChevronLeft className={styles.prevButtonIcon} />이전</button>
-              </Link>
+          {prevMeta.canPrev &&
+          <Link to={prevMeta.url}>
+            <button className={styles.prevButtonWrap}>
+              <FiChevronLeft className={styles.prevButtonIcon} />이전</button>
+          </Link>
           }
         </div>
         <div className={styles.titleWrap}>

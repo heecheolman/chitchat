@@ -22,16 +22,18 @@ const EntryPage: React.FC<{ history: History }> = ({ history }) => {
   return (
     <>
       <div className={styles.entryContainer}>
-        <input type="text"
-               className={styles.nickNameInput}
-               placeholder="닉네임을 설정해주세요!"
-               onChange={(e) => setUserName(e.target.value)}
+        <input
+          type="text"
+          className={styles.nickNameInput}
+          placeholder="닉네임을 설정해주세요!"
+          onChange={(e) => setUserName(e.target.value)}
         />
       </div>
       <div className={styles.entryContainer}>
-        { userName.length > 4 &&
-        <button className={styles.linkButton}
-                onClick={() => mutation()}
+        {userName.length > 4 &&
+        <button
+          className={styles.linkButton}
+          onClick={() => mutation()}
         >
           채팅하러가기
         </button>

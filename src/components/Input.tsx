@@ -50,16 +50,22 @@ class Input extends React.Component<any, { chatRoomId: number; userId: number; c
             return (
               <div className={styles.inputWrap}>
                 <div className={styles.messageInputWrap}>
-                  <input className={styles.messageInput}
-                         type="text"
-                         value={this.state.content}
-                         placeholder="내용 입력"
-                         onChange={onChange}
-                         onKeyPress={onKeyPress}
+                  <input
+                    className={styles.messageInput}
+                    type="text"
+                    value={this.state.content}
+                    placeholder="내용 입력"
+                    onChange={onChange}
+                    onKeyPress={onKeyPress}
                   />
                 </div>
                 <div className={styles.messageButtonWrap}>
-                  <button className={styles.messageButton} onClick={onClick}><FiArrowUp className={styles.messageSendIcon} /></button>
+                  <button
+                    className={styles.messageButton}
+                    onClick={onClick}
+                  >
+                    <FiArrowUp className={styles.messageSendIcon }/>
+                  </button>
                 </div>
               </div>
             )

@@ -31,8 +31,9 @@ class ChatRoomPage extends React.Component<any, { userId: number; backdrop: bool
   render() {
     return (
       <>
-        <Query query={CHAT_ROOMS_QUERY}
-               fetchPolicy={'network-only'}
+        <Query
+          query={CHAT_ROOMS_QUERY}
+          fetchPolicy={'network-only'}
         >
           {({ loading, data, subscribeToMore }: any) => {
             if (loading) {
@@ -58,18 +59,29 @@ class ChatRoomPage extends React.Component<any, { userId: number; backdrop: bool
             }
             return (
               <>
-                <ChatHeader prevMeta={{ canPrev: true, url: '/' }} title={'채팅목록'} />
-                <NewChatPrompt backdrop={this.state.backdrop} setBackdrop={this.setBackdrop} />
+                <ChatHeader
+                  prevMeta={{ canPrev: true, url: '/' }}
+                  title={'채팅목록'}
+                />
+                <NewChatPrompt
+                  backdrop={this.state.backdrop}
+                  setBackdrop={this.setBackdrop}
+                />
                 <div className={styles.chatRooms}>
-                  {
-                    data.chatRooms.map((chatRoom: any) => (
-                      <ChatRoom key={chatRoom.id} chatRoom={chatRoom} />
-                    ))
-                  }
+                  {data.chatRooms.map((chatRoom: any) => (
+                      <ChatRoom
+                        key={chatRoom.id}
+                        chatRoom={chatRoom}
+                      />
+                  ))}
                 </div>
                 <div className={styles.newChatWrap}>
-                  <button className={`simple-button ${styles.newChatButton}`}
-                          onClick={() => this.setBackdrop(true)}>새로운채팅</button>
+                  <button
+                    className={`simple-button ${styles.newChatButton}`}
+                    onClick={() => this.setBackdrop(true)}
+                  >
+                    새로운채팅
+                  </button>
                 </div>
               </>
             )
