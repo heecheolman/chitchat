@@ -26,7 +26,7 @@ export class Store {
   }
 
   static get loggedIn() {
-    return +Store.instance.id !== 0 && Store.instance.id !== void 0 && Store.instance.id !== null;
+    return Store.instance.id !== void 0 && Store.instance.id !== null;
   }
 
   static setState(state: any) {
