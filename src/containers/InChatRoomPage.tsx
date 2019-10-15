@@ -4,9 +4,9 @@ import { Query } from 'react-apollo';
 import Input from '../components/Input';
 import ChatHeader from '../components/ChatHeader';
 import styles from './InChatRoomPage.module.scss';
-import { CHATROOM_EVENT_SUBSCRIPTION, MESSAGE_QUERY } from '../graphql-schema';
+import { CHATROOM_INFO_SUBSCRIPTION, CHATROOM_QUERY } from '../graphql-schema';
 import MessageBox from '../components/MessageBox';
-import {IChatRoom} from "../interfaces";
+import { IChatRoom, IMessage, IUser } from '../interfaces';
 
 interface IState {
   chatRoomId: number;
@@ -15,6 +15,7 @@ interface IState {
 
 class InChatRoomPage extends React.Component<any, IState> {
   private subscription: any = null;
+  private prevUsers: IUser[] = [];
 
   constructor(props: any) {
     super(props);
@@ -32,18 +33,32 @@ class InChatRoomPage extends React.Component<any, IState> {
   render() {
     return (
       <Query
-        query={MESSAGE_QUERY}
+        query={CHATROOM_QUERY}
         variables={{ chatRoomId: this.state.chatRoomId }}
         fetchPolicy={'network-only'}
       >
         {
-          ({ loading, data, subscribeToMore }: any) => {
+          ({ loading, data, subscribeToMore }: {
+            loading: any;
+            data: {
+              chatRoom: IChatRoom;
+            };
+            subscribeToMore: any;
+          }) => {
             if (loading) {
               return null;
             }
+            const {
+              messages,
+              users
+            }: {
+              messages: IMessage[],
+              users: IUser[],
+            } = data.chatRoom;
+            this.prevUsers = users;
+
             if (!this.subscription) {
-              this.subscription = subscribeToMore({
-                document: CHATROOM_EVENT_SUBSCRIPTION,
+              this.subscription = subscribeToMore({ document: CHATROOM_INFO_SUBSCRIPTION,
                 variables: {
                   chatRoomId: this.state.chatRoomId,
                 },
@@ -51,11 +66,26 @@ class InChatRoomPage extends React.Component<any, IState> {
                   if (!subscriptionData.data) {
                     return prev;
                   }
-                  const chatRoomInfo = subscriptionData.data.chatRoomEvent as IChatRoom;
+                  const {
+                    chatRoom: {
+                      users: prevUsers,
+                    }
+                  } = prev;
+                  const chatRoomInfo = subscriptionData.data.chatRoomInfo as IChatRoom;
+                  const {
+                    messages,
+                    users,
+                  } = chatRoomInfo;
+
+                  const prevUserIds = prevUsers.map((u: IUser) => u.id);
+                  const userIds = users.map((u: IUser) => u.id);
+                  const [newUserId] = userIds.filter(id => !prevUserIds.includes(id));
+                  const foundUser = users.find((user: IUser) => user.id === newUserId);
+
                   return {
                     ...prev,
                     messages: [
-                      ...chatRoomInfo.messages,
+                      ...messages
                     ]
                   };
                 },
@@ -68,7 +98,7 @@ class InChatRoomPage extends React.Component<any, IState> {
                   title={'채팅'}
                 />
                 <div className={styles.messageContainer}>
-                  <MessageBox messages={data.messages} />
+                  <MessageBox messages={messages}/>
                   <Input
                     chatRoomId={this.state.chatRoomId}
                     userId={this.state.userId}

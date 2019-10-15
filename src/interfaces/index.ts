@@ -14,6 +14,6 @@ export interface IChatRoom {
   id: number;
   title: string;
   description: string;
-  user: IUser;
+  users: IUser[];
   messages: IMessage[];
 }

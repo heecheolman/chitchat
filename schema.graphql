@@ -23,7 +23,7 @@ type Query {
     chatRoom(id: Int!): ChatRoom!
     messages(chatRoomId: Int!): [Message]!
     users: [User]!
-    user(id: Int!): User
+    user(id: Int!): User!
 }
 
 type Mutation {
@@ -31,12 +31,13 @@ type Mutation {
     createUser(userName: String!): User!
     createChatRoom(userId: Int!, title: String!, description: String!): ChatRoom!
     joinChatRoom(chatRoomId: Int!, userId: Int!): ChatRoom!
+    exitChatRoom(chatRoomId: Int!, userId: Int!): ChatRoom!
 }
 
 type Subscription {
-    chatRoomEvent(chatRoomId: Int!): ChatRoom
+    chatRoomInfo(chatRoomId: Int!): ChatRoom!
     messageCreated(chatRoomId: Int!): Message
-    chatRoomCreated: ChatRoom
+    chatRoomCreated: ChatRoom!
 }
 
 schema {

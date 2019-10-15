@@ -2,17 +2,6 @@ import React from 'react';
 import styles from './Message.module.scss';
 import moment from 'moment';
 import { Store } from '../store';
-/*
-{
-        "id": 0,
-        "content": "wefewfe",
-        "createdBy": {
-          "id": 0,
-          "userName": "heecheolman"
-        },
-        "createdAt": "1562418078163"
-      },
- */
 
 const Message: React.FC<{ message: any }> = ({ message }) => {
   const isMe = +Store.instance.id === message.createdBy.id;

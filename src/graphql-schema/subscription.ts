@@ -34,9 +34,9 @@ const MESSAGE_SUBSCRIPTION = gql`
     }
 `;
 
-const CHATROOM_EVENT_SUBSCRIPTION = gql`    
-    subscription chatRoomEventCreated($chatRoomId: Int!) {
-        chatRoomEvent(chatRoomId: $chatRoomId) {
+const CHATROOM_INFO_SUBSCRIPTION = gql`    
+    subscription chatRoomInfo($chatRoomId: Int!) {
+        chatRoomInfo(chatRoomId: $chatRoomId) {
             id
             title
             description
@@ -60,5 +60,5 @@ const CHATROOM_EVENT_SUBSCRIPTION = gql`
 export {
     CHAT_ROOM_SUBSCRIPTION,
     MESSAGE_SUBSCRIPTION,
-    CHATROOM_EVENT_SUBSCRIPTION,
+    CHATROOM_INFO_SUBSCRIPTION,
 }

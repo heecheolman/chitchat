@@ -12,6 +12,52 @@ const CREATE_USER_MUTATION = gql`
     }
 `;
 
+const EXIT_USER_CHATROOM_MUTATION = gql`
+    mutation exotChatRoom($chatRoomId: Int!, $userId: Int!) {
+        exitChatRoom(chatRoomId: $chatRoomId, userId: $userId) {
+            id
+            title
+            description
+            users {
+                id
+                userName
+            }
+            messages {
+                id
+                content
+                createdBy {
+                    id
+                    userName
+                }
+                createdAt
+            }
+        }
+    }
+`
+
+const JOIN_USER_CHATROOM_MUTATION = gql`
+    mutation joinChatRoom($chatRoomId: Int!, $userId: Int!) {
+        joinChatRoom(chatRoomId: $chatRoomId, userId: $userId) {
+            id
+            title
+            description
+            users {
+                id
+                userName
+            }
+            messages {
+                id
+                content
+                createdBy {
+                    id
+                    userName
+                }
+                createdAt 
+            }
+        }
+    }
+`;
+
 /**
  * 채팅룸 생성
  */
@@ -59,4 +105,6 @@ export {
     CREATE_USER_MUTATION,
     CREATE_CHAT_ROOM_MUTATION,
     CREATE_MESSAGE_MUTATION,
+    JOIN_USER_CHATROOM_MUTATION,
+    EXIT_USER_CHATROOM_MUTATION,
 }
