@@ -1,9 +1,19 @@
 export interface IMessage {
   id: number;
   content: string;
-  createdBy: {
-    id: number;
-    userName: string;
-  };
+  createdBy: IUser;
   createdAt: string;
+}
+
+export interface IUser {
+  id: number;
+  userName: string;
+}
+
+export interface IChatRoom {
+  id: number;
+  title: string;
+  description: string;
+  user: IUser;
+  messages: IMessage[];
 }

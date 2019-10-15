@@ -4,8 +4,9 @@ import { Query } from 'react-apollo';
 import Input from '../components/Input';
 import ChatHeader from '../components/ChatHeader';
 import styles from './InChatRoomPage.module.scss';
-import { MESSAGE_QUERY, MESSAGE_SUBSCRIPTION } from '../graphql-schema';
+import { CHATROOM_EVENT_SUBSCRIPTION, MESSAGE_QUERY } from '../graphql-schema';
 import MessageBox from '../components/MessageBox';
+import {IChatRoom} from "../interfaces";
 
 interface IState {
   chatRoomId: number;
@@ -42,7 +43,7 @@ class InChatRoomPage extends React.Component<any, IState> {
             }
             if (!this.subscription) {
               this.subscription = subscribeToMore({
-                document: MESSAGE_SUBSCRIPTION,
+                document: CHATROOM_EVENT_SUBSCRIPTION,
                 variables: {
                   chatRoomId: this.state.chatRoomId,
                 },
@@ -50,12 +51,11 @@ class InChatRoomPage extends React.Component<any, IState> {
                   if (!subscriptionData.data) {
                     return prev;
                   }
-                  const { createdMessage } = subscriptionData.data;
+                  const chatRoomInfo = subscriptionData.data.chatRoomEvent as IChatRoom;
                   return {
                     ...prev,
                     messages: [
-                      ...prev.messages,
-                      createdMessage,
+                      ...chatRoomInfo.messages,
                     ]
                   };
                 },

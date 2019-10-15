@@ -14,7 +14,10 @@ const ChatRoom: React.FC<{ chatRoom: any }> = ({ chatRoom }) => {
           <div className={styles.chatRoomTitle}>
             {chatRoom.title}
           </div>
-          <button className={styles.actionButton}>
+          <button
+            type="button"
+            className={styles.actionButton}
+          >
             <IoIosMore />
           </button>
         </div>

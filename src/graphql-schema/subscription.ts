@@ -33,7 +33,32 @@ const MESSAGE_SUBSCRIPTION = gql`
         }
     }
 `;
+
+const CHATROOM_EVENT_SUBSCRIPTION = gql`    
+    subscription chatRoomEventCreated($chatRoomId: Int!) {
+        chatRoomEvent(chatRoomId: $chatRoomId) {
+            id
+            title
+            description
+            users {
+                id
+                userName
+            }
+            messages {
+                id
+                content
+                createdBy {
+                    id
+                    userName
+                }
+                createdAt
+            }
+        }
+    }
+`;
+
 export {
     CHAT_ROOM_SUBSCRIPTION,
     MESSAGE_SUBSCRIPTION,
+    CHATROOM_EVENT_SUBSCRIPTION,
 }
