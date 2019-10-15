@@ -15,6 +15,10 @@ class Input extends React.Component<any, { chatRoomId: number; userId: number; c
     };
   }
 
+  get content(): string {
+    return this.state.content;
+  }
+
   render() {
     return (
       <Mutation mutation={CREATE_MESSAGE_MUTATION}
@@ -31,19 +35,23 @@ class Input extends React.Component<any, { chatRoomId: number; userId: number; c
               });
             };
             const onClick = () => {
+              if (!this.content) {
+                return;
+              }
               mutation();
               this.setState({
                 content: ''
               });
-              // this.props.scrollToBottom();
             };
             const onKeyPress = (event: any) => {
+              if (!this.content) {
+                return;
+              }
               if (event.key === 'Enter') {
                 mutation();
                 this.setState({
                   content: ''
                 });
-                // this.props.scrollToBottom();
               }
             };
 
