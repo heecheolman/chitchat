@@ -17,7 +17,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    //@include shadow-box;
 
     .messageInput {
       width: 100%;
@@ -25,7 +24,6 @@
       padding: 10px 15px;
       font-size: 14px;
       border: 1px solid $app-weak-2;
-      //@include shadow-box;
       background: #fff;
       border-radius: 12px;
       color: $app-normal;
@@ -48,7 +46,7 @@
     .messageButton {
       display: flex;
       justify-content: center;
-      background-color: $app-weak-1;
+      background-color: $app-primary;
       margin-top: -3px;
       align-items: center;
       outline: none;
@@ -58,7 +56,11 @@
       height: 30px;
       border-radius: 50%;
       border: 1px solid transparent;
-      transition: .1s ease-out;
+      transition: .2s ease-out;
+
+      &:disabled {
+        background-color: $app-weak-1;
+      }
 
       .messageSendIcon {
         font-size: 14px;

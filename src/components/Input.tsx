@@ -18,6 +18,9 @@ class Input extends React.Component<any, { chatRoomId: number; userId: number; c
   get content(): string {
     return this.state.content;
   }
+  get canContentSend(): boolean {
+    return !!this.state.content && !!this.state.content.trim();
+  }
 
   render() {
     return (
@@ -25,7 +28,7 @@ class Input extends React.Component<any, { chatRoomId: number; userId: number; c
                 variables={{
                   chatRoomId: this.state.chatRoomId,
                   userId: this.state.userId,
-                  content: this.state.content
+                  content: this.content
                 }}>
         {
           (mutation: Function) => {
@@ -35,7 +38,7 @@ class Input extends React.Component<any, { chatRoomId: number; userId: number; c
               });
             };
             const onClick = () => {
-              if (!this.content) {
+              if (!this.canContentSend) {
                 return;
               }
               mutation();
@@ -44,7 +47,7 @@ class Input extends React.Component<any, { chatRoomId: number; userId: number; c
               });
             };
             const onKeyPress = (event: any) => {
-              if (!this.content) {
+              if (!this.canContentSend) {
                 return;
               }
               if (event.key === 'Enter') {
@@ -61,7 +64,7 @@ class Input extends React.Component<any, { chatRoomId: number; userId: number; c
                   <input
                     className={styles.messageInput}
                     type="text"
-                    value={this.state.content}
+                    value={this.content}
                     placeholder="내용 입력"
                     onChange={onChange}
                     onKeyPress={onKeyPress}
@@ -69,6 +72,7 @@ class Input extends React.Component<any, { chatRoomId: number; userId: number; c
                 </div>
                 <div className={styles.messageButtonWrap}>
                   <button
+                    disabled={!this.canContentSend}
                     className={styles.messageButton}
                     onClick={onClick}
                   >
